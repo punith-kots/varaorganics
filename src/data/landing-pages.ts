@@ -20,7 +20,7 @@ export const landingPages: LandingPage[] = [
   {
     slug: "ghee-bangalore",
     announcement: "Free delivery in Bangalore on orders above ₹999 · Lab report on every batch",
-    eyebrow: "Farm to kitchen · Gau Organics, Kota, Rajasthan",
+    eyebrow: "Farm to kitchen · Gujarat",
     headline: "A2 Gir Cow Bilona Ghee. Delivered to Bangalore in 48 hours.",
     headlineEm: null,
     subheadline:
@@ -28,7 +28,7 @@ export const landingPages: LandingPage[] = [
     openingCopy: null,
     heroImage: null,
     trustBullets: [
-      "A2 Gir cow — own farm, Rajasthan",
+      "A2 Gir cow — own farm, Gujarat",
       "70-parameter NABL tested",
       "Bilona hand-churned — not machine made",
       "QR batch traceability on every jar",
@@ -101,7 +101,7 @@ export const landingPages: LandingPage[] = [
     trustBullets: [
       "Bilona hand-churned — curd to butter to ghee",
       "NABL lab tested across 70+ parameters",
-      "Direct from the farm — Kota, Rajasthan",
+      "Direct from the farm — Gujarat",
     ],
     productSlug: "a2-gir-cow-bilona-ghee-500ml",
     variantSize: "500ml",
@@ -128,7 +128,7 @@ export const landingPages: LandingPage[] = [
       },
       {
         problem: "Sourced through multiple middlemen",
-        answer: "Direct from Gau Organics own farm, Kota, Rajasthan",
+        answer: "Direct from our own farm in Gujarat",
       },
       {
         problem: "No way to verify any claim on the label",
@@ -142,7 +142,7 @@ export const landingPages: LandingPage[] = [
     storyAttribution: "— Founder, Vara Organics",
     showProcess: true,
     processSteps: [
-      { title: "Farm, Kota, Rajasthan", body: "Gir cows. Own herd. A2 milk collected at dawn." },
+      { title: "Farm, Gujarat", body: "Gir cows. Own herd. A2 milk collected at dawn." },
       {
         title: "Bilona method",
         body: "Curd churned into butter by hand. Slow-cooked on wood fire. No machines.",

@@ -153,7 +153,7 @@ export default async function LandingPage({ params }: { params: Promise<{ slug: 
       <LpTrustStrip
         items={[
           "NABL tested — every batch",
-          "Own farm · Gir cows · Rajasthan",
+          "Own farm · Gir cows · Gujarat",
           "Scan QR · see your batch report",
         ]}
       />

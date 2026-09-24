@@ -9,7 +9,7 @@ const features: { Icon: Icon; title: string; body: string }[] = [
   {
     Icon: SproutIcon,
     title: "Direct from source farms",
-    body: "Own-herd A2 Gir cows in Rajasthan. No brokers, no aggregators — a name behind every litre.",
+    body: "Own-herd A2 Gir cows in Gujarat. No brokers, no aggregators — a name behind every litre.",
   },
   {
     Icon: LogIcon,

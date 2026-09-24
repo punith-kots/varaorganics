@@ -40,7 +40,7 @@ export interface AdminUser {
  * Supabase session.
  */
 export async function getAdminUser(): Promise<AdminUser | null> {
-  if (USE_MOCK_DATA) return { id: "mock-admin", email: "admin@varaorganics.com" };
+  if (USE_MOCK_DATA) return { id: "mock-admin", email: "admin@varaorganic.com" };
   const sb = await getAuthSupabase();
   if (!sb) return null;
   const {

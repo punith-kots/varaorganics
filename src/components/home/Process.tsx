@@ -3,7 +3,7 @@ import { Section, Eyebrow } from "@/components/ui/layout-primitives";
 const steps = [
   {
     title: "Farm Sourcing",
-    body: "A2 Gir cows at source farms in Rajasthan. Milk collected at dawn from known animals on known land.",
+    body: "A2 Gir cows at source farms in Gujarat. Milk collected at dawn from known animals on known land.",
   },
   {
     title: "Bilona Method",
@@ -25,7 +25,7 @@ export function Process() {
     <Section tone="white" ariaLabel="From farm to kitchen">
       <Eyebrow>From Farm to Kitchen</Eyebrow>
       <h2 className="font-serif text-[clamp(1.75rem,3.5vw,2.875rem)] font-semibold leading-tight text-navy">
-        Rajasthan to your <em className="italic text-amber">Bengaluru table</em>
+        Gujarat to your <em className="italic text-amber">Bengaluru table</em>
       </h2>
       <ol className="mt-12 grid grid-cols-2 gap-8 md:grid-cols-4">
         {steps.map((step, i) => (

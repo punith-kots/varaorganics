@@ -11,14 +11,16 @@ describe("catalog variant pricing", () => {
   it("prices each ghee size distinctly", () => {
     const v500 = ghee.variants.find((v) => v.size === "500ml")!;
     const v1l = ghee.variants.find((v) => v.size === "1L")!;
-    expect(v500.price).toBe(1399);
-    expect(v1l.price).toBe(2599);
+    expect(v500.price).toBe(1199);
+    expect(v1l.price).toBe(2199);
     expect(v500.price).not.toBe(v1l.price);
   });
 
-  it("gives both active ghee sizes their own indexable slug", () => {
-    const active = ghee.variants.filter((v) => v.active);
-    expect(active.map((v) => v.routeSlug).sort()).toEqual([
+  it("gives the routed ghee sizes their own indexable slug", () => {
+    // 250ml is active but selectable on the product page (no own URL); only the
+    // 500ml and 1L sizes have their own indexable slugs.
+    const routed = ghee.variants.filter((v) => v.active && v.routeSlug);
+    expect(routed.map((v) => v.routeSlug).sort()).toEqual([
       "a2-gir-cow-bilona-ghee-1l",
       "a2-gir-cow-bilona-ghee-500ml",
     ]);

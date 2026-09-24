@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { HeroAddToCart } from "@/components/home/HeroAddToCart";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { useCart } from "@/features/cart/store";
+import { getDisplayVariant } from "@/features/products/helpers";
 import { catalog } from "@/data/catalog";
 
 const product = catalog[0]!;
@@ -41,7 +42,9 @@ describe("post-add cart actions", () => {
       ...product,
       variants: product.variants.map((item) => ({ ...item, stock: 0 })),
     };
-    const selected = outOfStockProduct.variants.find((item) => item.active)!;
+    // Match the size the card actually shows by default (not merely the first
+    // active variant — 250ml is now active too).
+    const selected = getDisplayVariant(outOfStockProduct);
 
     render(<ProductCard product={outOfStockProduct} />);
 

@@ -40,7 +40,7 @@ export function Hero({
         <div className="flex flex-col justify-center px-6 py-14 md:px-[8%] md:py-20">
           <div className="text-amber mb-3 flex items-center gap-3 text-[11px] font-medium tracking-[0.3em] uppercase">
             <span className="h-px w-6 bg-current" aria-hidden="true" />
-            Farm to kitchen · Gau Organics, Rajasthan
+            Farm to kitchen · Small-batch &amp; lab-tested
           </div>
 
           <h1 className="text-navy mb-5 font-serif text-[clamp(2.75rem,5vw,4.375rem)] leading-[1.06] font-semibold">
@@ -113,7 +113,7 @@ export function Hero({
             </h2>
             <p className="text-ivory/50 mb-5 flex items-center gap-1.5 text-xs font-light">
               <span className="bg-gold inline-block h-1.5 w-1.5 rounded-full" aria-hidden="true" />
-              Rajasthan sourced
+              Traceably sourced
             </p>
 
             {batch && (

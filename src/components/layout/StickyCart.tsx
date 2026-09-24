@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/features/cart/store";
 import { formatPrice } from "@/lib/utils";
@@ -24,6 +25,7 @@ export function StickyCart({
   const [visible, setVisible] = useState(false);
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
+  const [hasAdded, setHasAdded] = useState(false);
   const sentinelPassed = useRef(false);
 
   useEffect(() => {
@@ -45,9 +47,22 @@ export function StickyCart({
     return () => observer.disconnect();
   }, [targetId]);
 
+  // Reserve space so page content isn't hidden behind the fixed bar (mobile
+  // bug 5a — the bar was overlapping/cutting off content at the bottom).
+  useEffect(() => {
+    if (visible) {
+      const prev = document.body.style.paddingBottom;
+      document.body.style.paddingBottom = "76px";
+      return () => {
+        document.body.style.paddingBottom = prev;
+      };
+    }
+  }, [visible]);
+
   function add() {
     addItem({ ...item, quantity: qty });
     setAdded(true);
+    setHasAdded(true);
     setTimeout(() => setAdded(false), 1600);
   }
 
@@ -58,43 +73,55 @@ export function StickyCart({
       }`}
       aria-hidden={!visible}
     >
-      <div className="min-w-0">
+      <div className="min-w-0 flex-1">
         <p className="truncate text-sm text-ivory">
           {item.productName} · {item.size}
         </p>
-        <p className="text-xs text-gold">
+        <p className="truncate text-xs text-gold">
           {formatPrice(item.price)} · {note}
         </p>
       </div>
       <div className="flex shrink-0 items-center gap-3">
-        <div className="flex items-center overflow-hidden rounded-[2px] border border-white/15">
-          <button
-            type="button"
-            aria-label="Decrease quantity"
-            onClick={() => setQty((q) => Math.max(1, q - 1))}
-            className="flex h-9 w-8 items-center justify-center bg-white/5 text-ivory"
+        {hasAdded ? (
+          /* Once added, the bar becomes a Proceed to Cart shortcut. */
+          <Link
+            href="/cart"
+            className="rounded-[2px] bg-gold px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-navy-deep transition-colors hover:bg-gold-lt"
           >
-            <MinusIcon width={16} height={16} />
-          </button>
-          <span className="flex h-9 w-8 items-center justify-center text-sm text-ivory" aria-live="polite">
-            {qty}
-          </span>
-          <button
-            type="button"
-            aria-label="Increase quantity"
-            onClick={() => setQty((q) => q + 1)}
-            className="flex h-9 w-8 items-center justify-center bg-white/5 text-ivory"
-          >
-            <PlusIcon width={16} height={16} />
-          </button>
-        </div>
-        <button
-          type="button"
-          onClick={add}
-          className="rounded-[2px] bg-gold px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-navy-deep transition-colors hover:bg-gold-lt"
-        >
-          {added ? "✓ Added" : "Add to Cart"}
-        </button>
+            Proceed to Cart&nbsp;→
+          </Link>
+        ) : (
+          <>
+            <div className="flex items-center overflow-hidden rounded-[2px] border border-white/15">
+              <button
+                type="button"
+                aria-label="Decrease quantity"
+                onClick={() => setQty((q) => Math.max(1, q - 1))}
+                className="flex h-9 w-8 items-center justify-center bg-white/5 text-ivory"
+              >
+                <MinusIcon width={16} height={16} />
+              </button>
+              <span className="flex h-9 w-8 items-center justify-center text-sm text-ivory" aria-live="polite">
+                {qty}
+              </span>
+              <button
+                type="button"
+                aria-label="Increase quantity"
+                onClick={() => setQty((q) => q + 1)}
+                className="flex h-9 w-8 items-center justify-center bg-white/5 text-ivory"
+              >
+                <PlusIcon width={16} height={16} />
+              </button>
+            </div>
+            <button
+              type="button"
+              onClick={add}
+              className="rounded-[2px] bg-gold px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-navy-deep transition-colors hover:bg-gold-lt"
+            >
+              {added ? "✓ Added" : "Add to Cart"}
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

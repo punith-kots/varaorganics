@@ -102,13 +102,13 @@ Every batch is independently NABL lab-tested before it ships. Scan the QR on you
         productId: "prod-ghee",
         size: "250ml",
         sku: "VARA-GHEE-250",
-        price: 799,
+        price: 599, // Sep 2026 pricing
         compareAtPrice: null,
         stock: 40,
         unitLabel: "250ml",
         unitBase: 250,
         unitType: "ml",
-        active: false, // design-only extra size
+        active: true, // Sep 2026 — 250ml now sold
         routeSlug: null,
       },
       {
@@ -116,7 +116,7 @@ Every batch is independently NABL lab-tested before it ships. Scan the QR on you
         productId: "prod-ghee",
         size: "500ml",
         sku: "VARA-GHEE-500",
-        price: 1399,
+        price: 1199, // Sep 2026 pricing
         compareAtPrice: null,
         stock: 50,
         unitLabel: "500ml",
@@ -130,8 +130,8 @@ Every batch is independently NABL lab-tested before it ships. Scan the QR on you
         productId: "prod-ghee",
         size: "1L",
         sku: "VARA-GHEE-1000",
-        price: 2599, // Fix #9 — confirmed price
-        compareAtPrice: 2798,
+        price: 2199, // Sep 2026 pricing
+        compareAtPrice: null,
         stock: 30,
         unitLabel: "1L",
         unitBase: 1000,
@@ -224,7 +224,7 @@ Batch-tested for purity markers. Scan the QR on your jar to see the report.`,
         productId: "prod-honey",
         size: "250g",
         sku: "VARA-HONEY-250",
-        price: 399,
+        price: 349, // Sep 2026 pricing
         compareAtPrice: null,
         stock: 60,
         unitLabel: "250g",
@@ -238,7 +238,7 @@ Batch-tested for purity markers. Scan the QR on your jar to see the report.`,
         productId: "prod-honey",
         size: "500g",
         sku: "VARA-HONEY-500",
-        price: 749, // CONFIRM
+        price: 649, // Sep 2026 pricing
         compareAtPrice: null,
         stock: 45,
         unitLabel: "500g",
@@ -252,13 +252,13 @@ Batch-tested for purity markers. Scan the QR on your jar to see the report.`,
         productId: "prod-honey",
         size: "1kg",
         sku: "VARA-HONEY-1000",
-        price: 1399,
+        price: 1199, // Sep 2026 pricing
         compareAtPrice: null,
         stock: 20,
         unitLabel: "1kg",
         unitBase: 1000,
         unitType: "g",
-        active: false,
+        active: true, // Sep 2026 — 1kg now sold
         routeSlug: null,
       },
     ],
@@ -342,13 +342,13 @@ Our sesame oil is extracted on a wooden ghani (kolhu), the traditional slow-pres
         productId: "prod-sesame",
         size: "500ml",
         sku: "VARA-SESAME-500",
-        price: 599,
+        price: 549, // Sep 2026 pricing
         compareAtPrice: null,
         stock: 35,
         unitLabel: "500ml",
         unitBase: 500,
         unitType: "ml",
-        active: false,
+        active: true, // Sep 2026 — 500ml now sold
         routeSlug: null,
       },
       {
@@ -443,7 +443,7 @@ Refined oils are stripped and deodorised for a neutral taste and long shelf life
         productId: "prod-groundnut",
         size: "1L",
         sku: "VARA-GNUT-1000",
-        price: 849,
+        price: 550, // Sep 2026 pricing
         compareAtPrice: null,
         stock: 40,
         unitLabel: "1L",
