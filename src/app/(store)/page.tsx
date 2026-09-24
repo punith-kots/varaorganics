@@ -14,7 +14,8 @@ import { CategoryQuickNav } from "@/components/home/CategoryQuickNav";
 import { CombosPreview } from "@/components/home/CombosPreview";
 import { StickyCart } from "@/components/layout/StickyCart";
 import { JsonLd } from "@/components/schema/JsonLd";
-import { organizationSchema, websiteSchema } from "@/components/schema/builders";
+import { organizationSchema, websiteSchema, faqSchema } from "@/components/schema/builders";
+import { homeFaqs } from "@/data/homeFaqs";
 import { categoryLabel } from "@/lib/utils";
 import type { Category } from "@/types";
 
@@ -49,6 +50,7 @@ export default async function HomePage() {
     <>
       <JsonLd data={organizationSchema()} />
       <JsonLd data={websiteSchema()} />
+      <JsonLd data={faqSchema(homeFaqs)} />
 
       <CategoryQuickNav categories={availableCategories} />
       {/* Static two-column hero (Website Changes §02 — carousel removed). */}

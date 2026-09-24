@@ -7,12 +7,17 @@ import type { Product } from "@/types";
 
 /** Add-to-cart for the bundle SKU (routePrefix "bundles"). */
 export function BundleAddToCart({ bundle }: { bundle: Product }) {
-  const variant = bundle.variants[0]!;
+  const variant = bundle.variants[0];
   const addItem = useCart((s) => s.addItem);
   const [added, setAdded] = useState(false);
+
+  // A bundle with no purchasable variant (missing/inactive data) must not crash
+  // the page/prerender — render nothing rather than reading price off undefined.
+  if (!variant) return null;
+
   const save = discountPercent(variant.price, variant.compareAtPrice);
 
-  function add() {
+  const add = () => {
     addItem({
       variantId: variant.id,
       productId: bundle.id,
@@ -27,7 +32,7 @@ export function BundleAddToCart({ bundle }: { bundle: Product }) {
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 1800);
-  }
+  };
 
   return (
     <div>

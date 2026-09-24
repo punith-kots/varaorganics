@@ -15,6 +15,7 @@ export function CombosPreview({ combos }: { combos: Combo[] }) {
   if (featured.length === 0) return null;
 
   return (
+    <div id="home-combos" className="scroll-mt-[120px]">
     <Section tone="paper" ariaLabel="Curated kitchen combos">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4 md:mb-10">
         <div>
@@ -40,5 +41,6 @@ export function CombosPreview({ combos }: { combos: Combo[] }) {
         ))}
       </div>
     </Section>
+    </div>
   );
 }

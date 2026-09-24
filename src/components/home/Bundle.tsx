@@ -18,12 +18,17 @@ const items = [
  * cart (priced as one SKU). Design section.
  */
 export function Bundle({ bundle }: { bundle: Product }) {
-  const variant = bundle.variants[0]!;
+  const variant = bundle.variants[0];
   const addItem = useCart((s) => s.addItem);
   const [added, setAdded] = useState(false);
+
+  // Resilience: a bundle with no purchasable variant (data/transient issue)
+  // must not crash the homepage prerender — skip the section instead.
+  if (!variant) return null;
+
   const save = discountPercent(variant.price, variant.compareAtPrice);
 
-  function add() {
+  const add = () => {
     addItem({
       variantId: variant.id,
       productId: bundle.id,
@@ -38,7 +43,7 @@ export function Bundle({ bundle }: { bundle: Product }) {
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 1600);
-  }
+  };
 
   return (
     <Section tone="ivory" ariaLabel="The Wellness Starter bundle">

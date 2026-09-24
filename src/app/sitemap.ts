@@ -58,5 +58,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticEntries, ...productEntries, ...articleEntries];
+  // Downloadable lab-report / accreditation PDFs surfaced on /labreport.
+  const reportAssets: MetadataRoute.Sitemap = [
+    "lab-reports/ghee-lab-test-2026.pdf",
+    "lab-reports/equity-food-testing-nabl-accreditation.pdf",
+  ].map((path) => ({
+    url: canonical(path),
+    lastModified: now,
+    changeFrequency: "yearly",
+    priority: 0.5,
+  }));
+
+  return [...staticEntries, ...productEntries, ...articleEntries, ...reportAssets];
 }

@@ -83,7 +83,7 @@ export function CategoryQuickNav({ categories }: { categories: CategoryLink[] })
           <Link
             key={category.key}
             href={`/shop/${category.key}`}
-            className="group flex min-w-fit flex-1 items-center justify-center gap-2.5 border-r border-white/10 px-5 py-3.5 transition-colors last:border-r-0 hover:bg-white/10"
+            className="group flex min-w-fit flex-1 items-center justify-center gap-2.5 border-r border-white/10 px-5 py-3.5 transition-colors hover:bg-white/10"
           >
             <span className="text-gold-lt">
               <CategoryIcon category={category.key} />
@@ -98,6 +98,18 @@ export function CategoryQuickNav({ categories }: { categories: CategoryLink[] })
             </span>
           </Link>
         ))}
+        {/* Jumps to the combos section on the homepage. */}
+        <Link
+          href="/#home-combos"
+          className="group flex min-w-fit flex-1 items-center justify-center gap-2.5 px-5 py-3.5 transition-colors hover:bg-white/10 md:justify-start"
+        >
+          <span className="text-gold-lt">
+            <CategoryIcon />
+          </span>
+          <span className="block font-serif text-lg leading-none font-semibold whitespace-nowrap">
+            Combos
+          </span>
+        </Link>
       </div>
     </nav>
   );
