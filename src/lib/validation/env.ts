@@ -17,14 +17,15 @@ const isMock = process.env.NEXT_PUBLIC_USE_MOCK_DATA === "true";
 const publicSchema = z.object({
   // NOTE: never hardcode credentials here — this module is imported by client
   // components, so any literal in it can end up in the browser bundle.
-  // All real values come from .env.local / the host's environment variables.
+  // Credentials come from .env.local / the host's environment variables.
   NEXT_PUBLIC_SITE_URL: z.string().url().default("http://localhost:3000"),
   NEXT_PUBLIC_USE_MOCK_DATA: z.enum(["true", "false"]).default("false"),
   NEXT_PUBLIC_SUPABASE_URL: z.string().url().optional().or(z.literal("")),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().optional().or(z.literal("")),
   NEXT_PUBLIC_RAZORPAY_KEY_ID: z.string().optional().or(z.literal("")),
   NEXT_PUBLIC_GTM_ID: z.string().optional().or(z.literal("")),
-  NEXT_PUBLIC_GA_MEASUREMENT_ID: z.string().optional().or(z.literal("")),
+  // Public Google tag ID; an explicit blank environment value disables GA4.
+  NEXT_PUBLIC_GA_MEASUREMENT_ID: z.string().default("G-EQGM74S1KF"),
   NEXT_PUBLIC_META_PIXEL_ID: z.string().optional().or(z.literal("")),
   NEXT_PUBLIC_CLARITY_ID: z.string().optional().or(z.literal("")),
   NEXT_PUBLIC_KLAVIYO_COMPANY_ID: z.string().optional().or(z.literal("")),

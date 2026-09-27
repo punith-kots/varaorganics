@@ -144,17 +144,13 @@ Every batch is independently NABL lab-tested before it ships. Scan the QR on you
     currentBatch: {
       id: "batch-ghee",
       productId: "prod-ghee",
-      batchNumber: "GHE-2024-047",
-      mfgDate: "2026-05-10",
-      bestBefore: "2027-05-09",
+      batchNumber: "G012092026",
+      mfgDate: "2026-09-12",
+      bestBefore: "2027-09-11",
       labReportUrl: null, // REQUIRES FINAL CONTENT — real NABL PDF URL
       active: true,
-      labParameters: [
-        { id: "lp-g1", name: "Moisture content", result: "0.12%", status: "Pass", position: 0 },
-        { id: "lp-g2", name: "Butyric acid (C4:0)", result: "3.82%", status: "Premium", position: 1 },
-        { id: "lp-g3", name: "Antibiotics", result: "Not detected", status: "Pass", position: 2 },
-        { id: "lp-g4", name: "Heavy metals", result: "Not detected", status: "Pass", position: 3 },
-      ],
+      // The label confirms dates only; do not carry forward another batch's results.
+      labParameters: [],
     },
   },
   {

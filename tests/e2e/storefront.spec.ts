@@ -73,7 +73,7 @@ test("8. learn article renders semantic headings (single H1)", async ({ page }) 
 });
 
 test("9. verify page handles valid and invalid batches", async ({ page }) => {
-  await page.goto("/verify/GHE-2024-047");
+  await page.goto("/verify/G012092026");
   await expect(page.getByRole("heading", { name: /A2 Gir Cow Bilona Ghee/i })).toBeVisible();
   await expect(page.getByText(/verified batch/i)).toBeVisible();
 

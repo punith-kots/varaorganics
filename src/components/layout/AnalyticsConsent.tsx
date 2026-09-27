@@ -30,6 +30,7 @@ const hasAnything = Boolean(gtmId || gaId || pixelId || clarityId);
 export function AnalyticsConsent() {
   const pathname = usePathname();
   const [consent, setConsent] = useState<boolean | null>(null);
+  const [gaReady, setGaReady] = useState(false);
 
   useEffect(() => {
     // One-time read of persisted consent (external state) on mount.
@@ -42,8 +43,9 @@ export function AnalyticsConsent() {
 
   // Fire page_view on client navigation once consent is granted.
   useEffect(() => {
+    if (!gtmId && gaId && !gaReady) return;
     if (consent) trackPageView(window.location.href);
-  }, [pathname, consent]);
+  }, [pathname, consent, gaReady]);
 
   function accept() {
     localStorage.setItem(CONSENT_KEY, "granted");
@@ -87,7 +89,7 @@ export function AnalyticsConsent() {
             src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
             strategy="afterInteractive"
           />
-          <Script id="ga-init" strategy="afterInteractive">
+          <Script id="ga-init" strategy="afterInteractive" onReady={() => setGaReady(true)}>
             {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}',{send_page_view:false});`}
           </Script>
         </>

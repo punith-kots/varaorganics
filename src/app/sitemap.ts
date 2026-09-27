@@ -21,7 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "combos",
     "bundles/wellness-starter",
     "our-story",
-    LAB_REPORTS_PATH.slice(1),
+    ...["ghee", "oil", "honey"].map((category) => `${LAB_REPORTS_PATH.slice(1)}/${category}`),
     "faqs",
     "contact",
     "learn",
@@ -61,6 +61,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Downloadable lab-report / accreditation PDFs surfaced on /labreport.
   const reportAssets: MetadataRoute.Sitemap = [
     "lab-reports/ghee-lab-test-2026.pdf",
+    "lab-reports/nandhini-agro-foods-oil-report-2026.pdf",
     "lab-reports/equity-food-testing-nabl-accreditation.pdf",
   ].map((path) => ({
     url: canonical(path),

@@ -4,6 +4,7 @@ import { cormorant, jost } from "@/config/fonts";
 import { site } from "@/config/site";
 import { SITE_URL } from "@/lib/validation/env";
 import { AnalyticsConsent } from "@/components/layout/AnalyticsConsent";
+import { InteraktWidget } from "@/components/layout/InteraktWidget";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </a>
         {children}
         <AnalyticsConsent />
+        <InteraktWidget />
       </body>
     </html>
   );

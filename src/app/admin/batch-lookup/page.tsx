@@ -37,7 +37,7 @@ export default async function BatchLookupPage({
           id="batch"
           name="batch"
           defaultValue={query}
-          placeholder="e.g. GHE-2024-047"
+          placeholder="e.g. G012092026"
           className="w-full max-w-xs rounded-[2px] border border-navy/15 bg-white px-3 py-2.5 text-sm text-navy outline-none focus:border-navy"
         />
         <button

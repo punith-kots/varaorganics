@@ -144,6 +144,18 @@ join (values
 ) as b(pslug, batch_number, mfg_date, best_before) on p.slug = b.pslug
 on conflict (batch_number) do nothing;
 
+-- Current ghee batch from the supplied jar label. Keep the old batch and its
+-- results as history; no lab parameters have been supplied for this new batch.
+insert into public.product_batches (product_id, batch_number, mfg_date, best_before, lab_report_url, active)
+select id, 'G012092026', date '2026-09-12', date '2027-09-11', null, true
+from public.products where slug = 'a2-gir-cow-bilona-ghee'
+on conflict (batch_number) do nothing;
+
+update public.product_batches
+set active = false
+where product_id = (select id from public.products where slug = 'a2-gir-cow-bilona-ghee')
+  and batch_number = 'GHE-2024-047';
+
 insert into public.lab_parameters (batch_id, name, result, status, position)
 select bt.id, lp.name, lp.result, lp.status, lp.position
 from public.product_batches bt
