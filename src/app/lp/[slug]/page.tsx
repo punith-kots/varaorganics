@@ -34,7 +34,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const lp = await getLandingPage(slug);
   return {
-    title: lp?.metaTitle ?? lp?.headline ?? "Vara Organics",
+    title: lp?.metaTitle ?? lp?.headline ?? "Vara Organic",
     description: lp?.subheadline,
     robots: lp?.noindex === false ? undefined : { index: false, follow: false },
   };
@@ -54,6 +54,7 @@ export default async function LandingPage({ params }: { params: Promise<{ slug: 
 
   const cartItem = {
     variantId: variant.id,
+      sku: variant.sku,
     productId: product.id,
     slug: product.slug,
     routePrefix: product.routePrefix,
@@ -68,7 +69,7 @@ export default async function LandingPage({ params }: { params: Promise<{ slug: 
     <main id="main" className="bg-ivory">
       {/* Announcement bar */}
       {lp.announcement && (
-        <div className="bg-navy px-4 py-2.5 text-center text-xs font-light tracking-[0.1em] text-gold-lt">
+        <div className="bg-navy text-gold-lt px-4 py-2.5 text-center text-xs font-light tracking-[0.1em]">
           {lp.announcement}
         </div>
       )}
@@ -81,49 +82,49 @@ export default async function LandingPage({ params }: { params: Promise<{ slug: 
       {/* Hero */}
       <section
         id={HERO_ID}
-        className="bg-gradient-to-b from-navy-mid to-navy-deep px-6 py-12 md:px-[8%] md:py-16"
+        className="from-navy-mid to-navy-deep bg-gradient-to-b px-6 py-12 md:px-[8%] md:py-16"
       >
         <div className="mx-auto grid max-w-[1100px] items-center gap-10 md:grid-cols-2">
           <div>
             {lp.eyebrow && (
-              <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-gold">
+              <p className="text-gold mb-4 text-[11px] font-medium tracking-[0.28em] uppercase">
                 {lp.eyebrow}
               </p>
             )}
-            <h1 className="mb-4 font-serif text-[clamp(2rem,4.5vw,3.25rem)] font-semibold leading-[1.08] text-ivory">
+            <h1 className="text-ivory mb-4 font-serif text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.08] font-semibold">
               {lp.headline}
               {lp.headlineEm && (
                 <>
                   {" "}
-                  <em className="italic text-gold">{lp.headlineEm}</em>
+                  <em className="text-gold italic">{lp.headlineEm}</em>
                 </>
               )}
             </h1>
 
-            {lp.openingCopy
-              ? lp.openingCopy.split("\n\n").map((para, i, arr) => (
-                  <p
-                    key={para.slice(0, 32)}
-                    className={
-                      i === arr.length - 1 && arr.length > 1
-                        ? "mb-6 font-medium text-ivory"
-                        : "mb-4 max-w-md text-[15px] font-light leading-relaxed text-ivory/70"
-                    }
-                  >
-                    {para}
-                  </p>
-                ))
-              : (
-                  <p className="mb-6 max-w-md text-[15px] font-light leading-relaxed text-ivory/70">
-                    {lp.subheadline}
-                  </p>
-                )}
+            {lp.openingCopy ? (
+              lp.openingCopy.split("\n\n").map((para, i, arr) => (
+                <p
+                  key={para.slice(0, 32)}
+                  className={
+                    i === arr.length - 1 && arr.length > 1
+                      ? "text-ivory mb-6 font-medium"
+                      : "text-ivory/70 mb-4 max-w-md text-[15px] leading-relaxed font-light"
+                  }
+                >
+                  {para}
+                </p>
+              ))
+            ) : (
+              <p className="text-ivory/70 mb-6 max-w-md text-[15px] leading-relaxed font-light">
+                {lp.subheadline}
+              </p>
+            )}
 
             {lp.trustBullets.length > 0 && (
               <ul className="mb-8 space-y-2.5">
                 {lp.trustBullets.map((bullet) => (
-                  <li key={bullet} className="flex items-center gap-3 text-[14px] text-ivory/85">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold-lt/20 text-gold-lt">
+                  <li key={bullet} className="text-ivory/85 flex items-center gap-3 text-[14px]">
+                    <span className="bg-gold-lt/20 text-gold-lt flex h-5 w-5 shrink-0 items-center justify-center rounded-full">
                       <CheckIcon width={12} height={12} />
                     </span>
                     {bullet}
@@ -132,9 +133,14 @@ export default async function LandingPage({ params }: { params: Promise<{ slug: 
               </ul>
             )}
 
-            <LandingCTA label={lp.ctaLabel} sku={variant.sku} item={cartItem} tone={lp.ctaButtonColor} />
-            <p className="mt-4 text-sm font-light text-ivory/45">
-              Free Bangalore delivery · Ships within 48 hours · 7-day return guarantee
+            <LandingCTA
+              label={lp.ctaLabel}
+              sku={variant.sku}
+              item={cartItem}
+              tone={lp.ctaButtonColor}
+            />
+            <p className="text-ivory/45 mt-4 text-sm font-light">
+              Free Bangalore delivery · Ships within 48 hours · Report delivery issues within 24 hours
             </p>
           </div>
 
@@ -142,7 +148,10 @@ export default async function LandingPage({ params }: { params: Promise<{ slug: 
             {lp.showLabCard && product.currentBatch ? (
               <LabCard batch={product.currentBatch} productName={product.productName} />
             ) : (
-              <LpHeroImage src={lp.heroImage} alt={product.productName} />
+              <LpHeroImage
+                src={product.category === "ghee" ? (product.images[0]?.url ?? null) : lp.heroImage}
+                alt={product.productName}
+              />
             )}
           </div>
         </div>
@@ -179,9 +188,9 @@ export default async function LandingPage({ params }: { params: Promise<{ slug: 
             tone="navy-on-dark"
           />
           {lp.variantNote && (
-            <p className="mt-4 text-sm font-light text-ivory/55">{lp.variantNote}</p>
+            <p className="text-ivory/55 mt-4 text-sm font-light">{lp.variantNote}</p>
           )}
-          <p className="mt-2 text-xs font-light text-ivory/40">
+          <p className="text-ivory/40 mt-2 text-xs font-light">
             Free Bangalore delivery on orders ₹999+ · Ships within 48 hours
           </p>
         </div>
@@ -189,11 +198,11 @@ export default async function LandingPage({ params }: { params: Promise<{ slug: 
 
       {/* Minimal footer — no nav links */}
       <footer className="bg-navy-deep px-6 py-8 text-center md:px-[8%]">
-        <p className="text-xs font-light text-ivory/45">
+        <p className="text-ivory/45 text-xs font-light">
           © {new Date().getFullYear()} {site.name} · By {site.legalName}
           {site.fssaiLicence ? ` · FSSAI ${site.fssaiLicence}` : " · FSSAI applied"}
         </p>
-        <p className="mt-2 text-xs font-light text-ivory/35">
+        <p className="text-ivory/35 mt-2 text-xs font-light">
           Looking for our full website?{" "}
           <Link href="/" className="text-gold-lt underline">
             Visit {site.url.replace(/^https?:\/\//, "")}

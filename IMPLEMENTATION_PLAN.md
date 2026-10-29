@@ -1,4 +1,4 @@
-# IMPLEMENTATION_PLAN.md — Vara Organics
+# IMPLEMENTATION_PLAN.md — Vara Organic
 
 Ordered build plan following the prompt's Phases 3–8. Each phase ends with lint + typecheck
 passing. External services are mocked so `build` and `test` succeed without credentials.

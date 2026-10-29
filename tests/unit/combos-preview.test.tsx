@@ -21,7 +21,7 @@ describe("homepage combos preview", () => {
     expect(screen.getByText("Mane Ruchi (Starter Combo)")).toBeInTheDocument();
     expect(screen.getByText("Ajji Kai Ruchi (Grandmothers Kitchen)")).toBeInTheDocument();
     expect(screen.queryByText("Ammana Madilu (New Mother)")).not.toBeInTheDocument();
-    expect(container.querySelectorAll("img")).toHaveLength(6);
+    expect(container.querySelectorAll("img:not([data-quality-artwork])")).toHaveLength(6);
   });
 
   it("replaces the compact add button with a single cart action", () => {
@@ -42,6 +42,6 @@ describe("homepage combos preview", () => {
     expect(
       screen.getByLabelText("Products included in Mane Adige Set (Complete Kitchen)"),
     ).toBeInTheDocument();
-    expect(container.querySelectorAll("img")).toHaveLength(3);
+    expect(container.querySelectorAll("img:not([data-quality-artwork])")).toHaveLength(3);
   });
 });

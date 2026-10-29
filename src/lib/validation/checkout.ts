@@ -26,6 +26,7 @@ export const checkoutSchema = z.object({
   postalCode: indianPin,
   country: z.string().trim().min(2, "Country is required"),
   paymentMethod: paymentMethodSchema,
+  smsOptIn: z.boolean().optional(),
   notes: z.string().trim().max(500).optional().or(z.literal("")),
 });
 
@@ -38,6 +39,7 @@ export const orderLineSchema = z.object({
 });
 
 export const createOrderSchema = z.object({
+  analyticsConsent: z.boolean().optional(),
   customer: checkoutSchema,
   items: z.array(orderLineSchema).min(1, "Your cart is empty"),
   utm: z

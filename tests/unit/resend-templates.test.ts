@@ -49,6 +49,9 @@ function order(overrides: Partial<Order> = {}): Order {
     batchNumber: "GHE-2024-047",
     utm: { source: null, medium: null, campaign: null },
     notes: null,
+    smsOptIn: false,
+    smsOptInAt: null,
+    smsConsentText: null,
     createdAt: "2026-08-21T12:00:00.000Z",
     ...overrides,
   };

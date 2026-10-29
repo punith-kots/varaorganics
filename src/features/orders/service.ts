@@ -1,4 +1,7 @@
+import { sendMetaPurchase } from "@/lib/analytics/meta-capi";
+import { confirmCapturedPayment } from "@/lib/razorpay/server";
 import "server-only";
+import { smsConsentRecord } from "./consent";
 import crypto from "node:crypto";
 import { getAdminSupabase } from "@/lib/supabase/admin";
 import { USE_MOCK_DATA } from "@/lib/validation/env";
@@ -6,7 +9,7 @@ import { safeError } from "@/lib/security/redact";
 import { getAllProducts, getVariantById } from "@/features/products/queries";
 import { getComboByCheckoutSku } from "@/features/combos/queries";
 import { getSiteSettings } from "@/features/settings/queries";
-import { computeTotals } from "@/features/cart/selectors";
+import { computeTotals, COD_FEE } from "@/features/cart/selectors";
 import { createShipment } from "@/lib/shiprocket/server";
 import { sendEmail, sendResendEvent } from "@/lib/resend/server";
 import { sendWhatsAppTemplate } from "@/lib/wati/server";
@@ -47,6 +50,7 @@ async function buildOrder(input: CreateOrderInput): Promise<{
   batchNumber: string | null;
   subtotal: number;
   shipping: number;
+  codFee: number;
   tax: number;
   total: number;
 }> {
@@ -88,6 +92,12 @@ async function buildOrder(input: CreateOrderInput): Promise<{
     }
     const lineTotal = variant.price * line.quantity;
     items.push({
+      category:
+        combo || product.isBundle
+          ? "combo"
+          : product.category === "oils"
+            ? "oil"
+            : product.category,
       productName: product.productName,
       size: combo
         ? combo.contents
@@ -117,9 +127,9 @@ async function buildOrder(input: CreateOrderInput): Promise<{
     });
   }
 
-  const codFee = input.customer.paymentMethod === "cod" ? 0 : 0;
+  const codFee = input.customer.paymentMethod === "cod" ? COD_FEE : 0;
   const totals = computeTotals(cartItems, settings.freeShippingThreshold, { codFee });
-  return { items, cartItems, batchNumber, ...totals };
+  return { items, cartItems, batchNumber, ...totals, codFee };
 }
 
 export class OrderError extends Error {
@@ -138,6 +148,7 @@ export class OrderError extends Error {
 export async function createPendingOrder(
   input: CreateOrderInput,
   idempotencyKey: string,
+  analyticsContext?: Order["analyticsContext"],
 ): Promise<{ order: Order; totalRupees: number }> {
   const existingId = await findOrderIdByIdempotency(idempotencyKey);
   if (existingId) {
@@ -167,6 +178,7 @@ export async function createPendingOrder(
     items: built.items,
     subtotal: built.subtotal,
     shippingAmount: built.shipping,
+    codFee: built.codFee,
     taxAmount: built.tax,
     totalAmount: built.total,
     currency: "INR",
@@ -186,6 +198,10 @@ export async function createPendingOrder(
       campaign: input.utm?.campaign || null,
     },
     notes: input.customer.notes || null,
+    analyticsContext: analyticsContext ?? null,
+    paidAt: null,
+    metaPurchaseSentAt: null,
+    ...smsConsentRecord(input.customer.smsOptIn, now),
     createdAt: now,
   };
 
@@ -227,13 +243,17 @@ export async function finalizePaidOrder(
   const paymentAlreadyConfirmed =
     order.paymentStatus === "paid" || order.paymentStatus === "cod_pending";
   if (paymentAlreadyConfirmed && order.fulfillmentStatus !== "unfulfilled") {
+    await deliverMetaPurchase(order);
     return order; // already processed
   }
 
   await updateOrder(orderId, {
     paymentStatus: order.paymentMethod === "cod" ? "cod_pending" : "paid",
     razorpayPaymentId: paymentId,
+    paidAt: order.paymentMethod === "cod" ? null : (order.paidAt ?? new Date().toISOString()),
   });
+  const paidOrder = await getOrder(orderId);
+  if (paidOrder) await deliverMetaPurchase(paidOrder);
   await decrementStock(order);
 
   const shipment = await createShipment(order);
@@ -388,6 +408,13 @@ export async function finalizeByRazorpayOrder(
 ): Promise<Order | null> {
   const order = await findOrderByRazorpayOrderId(rzpOrderId);
   if (!order) return null;
+  if (order.paymentMethod === "cod") throw new Error("COD cannot be confirmed by Razorpay");
+  if (!(await confirmCapturedPayment(paymentId, rzpOrderId, order.totalAmount, order.currency))) {
+    throw new OrderError(
+      "payment_not_captured",
+      "Payment capture is not confirmed yet. Please check your order status before paying again.",
+    );
+  }
   return finalizePaidOrder(order.id, paymentId);
 }
 
@@ -425,3 +452,14 @@ export async function markPaymentFailedByRazorpayOrder(
 }
 
 export { getOrder };
+
+/** Repeat verified payment notifications retry failed deliveries using the same event ID. */
+async function deliverMetaPurchase(order: Order) {
+  if (await sendMetaPurchase(order)) {
+    try {
+      await updateOrder(order.id, { metaPurchaseSentAt: new Date().toISOString() });
+    } catch {
+      safeError("meta-capi", "Could not persist delivery receipt", { orderId: order.id });
+    }
+  }
+}

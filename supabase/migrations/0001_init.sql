@@ -1,4 +1,4 @@
--- Vara Organics — schema (Dev Kit §11, Learn Brief §03).
+-- Vara Organic — schema (Dev Kit §11, Learn Brief §03).
 -- Normalized model (overrides the docs' denormalized JSON columns). Integer INR
 -- prices. All timestamps timestamptz. See DATABASE.md.
 

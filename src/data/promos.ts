@@ -33,7 +33,7 @@ export const heroSlides: HeroSlide[] = [
     subtitle: "Hand-churned A2 Gir Cow Bilona Ghee — NABL lab-tested, batch-traced.",
     ctaLabel: "Shop Ghee — ₹1,399",
     ctaHref: "/ghee/a2-gir-cow-bilona-ghee-500ml",
-    image: "/product-images/vg-slider-1.jpg.webp",
+    image: "/product-images/vara-ghee-square.jpg",
     tone: "paper",
   },
   {
@@ -79,7 +79,7 @@ export const promoTiles: PromoTile[] = [
     title: "See Your Batch Lab Report",
     ctaLabel: "Learn How",
     ctaHref: LAB_REPORTS_PATH,
-    image: "/products/farm-cheese-1-1-430x491.jpg",
+    image: "/product-images/vara-ghee-portrait.jpg",
     tone: "gold",
   },
 ];

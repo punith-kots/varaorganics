@@ -6,7 +6,7 @@ import { SITE_URL } from "@/lib/validation/env";
  * constants (name, domain, socials) used across metadata and schema.
  */
 export const site = {
-  name: "Vara Organics",
+  name: "Vara Organic",
   legalName: "Varixa Global Ventures Pvt. Ltd.",
   tagline: "Nature's Finest Gift",
   description:

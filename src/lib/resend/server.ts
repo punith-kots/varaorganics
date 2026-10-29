@@ -3,7 +3,7 @@ import { Resend } from "resend";
 import { optionalServerEnv, USE_MOCK_DATA } from "@/lib/validation/env";
 import { safeError, safeLog } from "@/lib/security/redact";
 
-const DEFAULT_FROM = "Vara Organics <no-reply@updates.varaorganic.com>";
+const DEFAULT_FROM = "Vara Organic <no-reply@updates.varaorganic.com>";
 const DEFAULT_REPLY_TO = "hello@varaorganic.com";
 
 export type ResendResult = {

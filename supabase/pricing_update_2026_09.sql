@@ -1,4 +1,4 @@
--- Vara Organics — pricing refresh + new products (Sep 2026 brief).
+-- Vara Organic — pricing refresh + new products (Sep 2026 brief).
 -- Run in the Supabase SQL editor. Idempotent (safe to re-run).
 --
 -- Source: Vara_Organic_Pricing_Upload_Sheet.xlsx + Website Update Brief.

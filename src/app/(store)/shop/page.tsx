@@ -12,7 +12,7 @@ export const revalidate = 300;
 export const metadata: Metadata = buildMetadata({
   title: "Shop All — Ghee, Honey & Wood-Pressed Oils",
   description:
-    "Shop Vara Organics: A2 Gir Cow Bilona ghee, raw wild forest honey and wood-pressed oils. Every batch NABL lab-tested and QR-traceable.",
+    "Shop Vara Organic: A2 Gir Cow Bilona ghee, raw wild forest honey and wood-pressed oils. Every batch NABL lab-tested and QR-traceable.",
   path: "shop",
 });
 

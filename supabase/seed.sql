@@ -1,4 +1,4 @@
--- Vara Organics — seed data (Dev Kit §11).
+-- Vara Organic — seed data (Dev Kit §11).
 -- Mirrors src/data/catalog.ts + src/data/articles.ts. Prices/batches flagged
 -- CONFIRM in ASSUMPTIONS.md are placeholders. Design-only extras are active=false.
 -- Idempotent via stable slugs/SKUs (on conflict do nothing).
@@ -103,7 +103,7 @@ from public.products p
 join (values
   ('a2-gir-cow-bilona-ghee', '250ml', 'VARA-GHEE-250', 799, null::int, 40, '250ml', 250, 'ml', null, false, 0),
   ('a2-gir-cow-bilona-ghee', '500ml', 'VARA-GHEE-500', 1399, null, 50, '500ml', 500, 'ml', 'a2-gir-cow-bilona-ghee-500ml', true, 1),
-  ('a2-gir-cow-bilona-ghee', '1L', 'VARA-GHEE-1000', 2599, 2798, 30, '1L', 1000, 'ml', 'a2-gir-cow-bilona-ghee-1l', true, 2),
+  ('a2-gir-cow-bilona-ghee', '1L', 'VARA-GHEE-1000', 2199, null, 30, '1L', 1000, 'ml', 'a2-gir-cow-bilona-ghee-1l', true, 2),
   ('raw-wild-forest-honey', '250g', 'VARA-HONEY-250', 399, null, 60, '250g', 250, 'g', 'raw-wild-forest-honey-250g', true, 0),
   ('raw-wild-forest-honey', '500g', 'VARA-HONEY-500', 749, null, 45, '500g', 500, 'g', 'raw-wild-forest-honey-500g', true, 1),
   ('raw-wild-forest-honey', '1kg', 'VARA-HONEY-1000', 1399, null, 20, '1kg', 1000, 'g', null, false, 2),

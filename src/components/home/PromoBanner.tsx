@@ -79,7 +79,7 @@ export function PromoBanner() {
         <div className="grid gap-4 lg:grid-cols-3">
           {/* Slider */}
           <div
-            className="relative overflow-hidden rounded-lg bg-paper lg:col-span-2"
+            className="bg-paper relative overflow-hidden rounded-lg lg:col-span-2"
             role="group"
             aria-roledescription="carousel"
             aria-label="Featured promotions"
@@ -94,10 +94,7 @@ export function PromoBanner() {
               {heroSlides.map((s, i) => (
                 <div
                   key={s.title}
-                  className={cn(
-                    "relative w-full shrink-0 overflow-hidden",
-                    slideTones[s.tone],
-                  )}
+                  className={cn("relative w-full shrink-0 overflow-hidden", slideTones[s.tone])}
                   role="group"
                   aria-roledescription="slide"
                   aria-label={`${i + 1} of ${count}`}
@@ -112,11 +109,15 @@ export function PromoBanner() {
                       fill
                       priority={i === 0}
                       sizes="(max-width: 1024px) 100vw, 66vw"
-                      className="object-cover"
+                      className={
+                        s.image.includes("/vara-ghee-")
+                          ? "object-contain object-right"
+                          : "object-cover"
+                      }
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="rounded-[2px] border border-dashed border-navy/20 px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.2em] text-navy/35">
+                      <span className="border-navy/20 text-navy/35 rounded-[2px] border border-dashed px-3 py-1.5 text-[10px] font-medium tracking-[0.2em] uppercase">
                         Image
                       </span>
                     </div>
@@ -127,14 +128,14 @@ export function PromoBanner() {
 
                   {/* Text, overlaid on the left */}
                   <div className="relative z-10 flex min-h-[380px] max-w-xl flex-col justify-center p-8 md:min-h-[440px] md:p-14">
-                    <span className="mb-4 inline-block w-fit rounded-full bg-white/70 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-amber">
+                    <span className="text-amber mb-4 inline-block w-fit rounded-full bg-white/70 px-3.5 py-1.5 text-[11px] font-semibold tracking-[0.16em] uppercase">
                       {s.eyebrow}
                     </span>
-                    <h2 className="mb-3 font-serif text-[clamp(1.875rem,3.5vw,3rem)] font-semibold leading-[1.08] text-navy">
+                    <h2 className="text-navy mb-3 font-serif text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] font-semibold">
                       {s.title}
                     </h2>
                     {s.subtitle && (
-                      <p className="mb-6 max-w-sm text-[15px] font-light leading-relaxed text-navy/70">
+                      <p className="text-navy/70 mb-6 max-w-sm text-[15px] leading-relaxed font-light">
                         {s.subtitle}
                       </p>
                     )}
@@ -152,7 +153,7 @@ export function PromoBanner() {
                   type="button"
                   onClick={() => go(index - 1)}
                   aria-label="Previous slide"
-                  className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-navy shadow-sm transition-colors hover:bg-white"
+                  className="text-navy absolute top-1/2 left-3 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow-sm transition-colors hover:bg-white"
                 >
                   <ChevronLeftIcon />
                 </button>
@@ -160,7 +161,7 @@ export function PromoBanner() {
                   type="button"
                   onClick={() => go(index + 1)}
                   aria-label="Next slide"
-                  className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-navy shadow-sm transition-colors hover:bg-white"
+                  className="text-navy absolute top-1/2 right-3 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow-sm transition-colors hover:bg-white"
                 >
                   <ChevronRightIcon />
                 </button>
@@ -174,7 +175,7 @@ export function PromoBanner() {
                       aria-current={i === index}
                       className={cn(
                         "h-2 rounded-full transition-all",
-                        i === index ? "w-6 bg-navy" : "w-2 bg-navy/25 hover:bg-navy/40",
+                        i === index ? "bg-navy w-6" : "bg-navy/25 hover:bg-navy/40 w-2",
                       )}
                     />
                   ))}
@@ -210,15 +211,25 @@ export function PromoBanner() {
                   <div className={cn("absolute inset-0 bg-gradient-to-r", tone.scrim)} />
 
                   <div className="relative z-10 max-w-[70%]">
-                    <p className={cn("mb-1 text-[10px] font-semibold uppercase tracking-[0.16em]", tone.sub)}>
+                    <p
+                      className={cn(
+                        "mb-1 text-[10px] font-semibold tracking-[0.16em] uppercase",
+                        tone.sub,
+                      )}
+                    >
                       {tile.eyebrow}
                     </p>
-                    <h3 className={cn("mb-3 font-serif text-xl font-semibold leading-tight", tone.text)}>
+                    <h3
+                      className={cn(
+                        "mb-3 font-serif text-xl leading-tight font-semibold",
+                        tone.text,
+                      )}
+                    >
                       {tile.title}
                     </h3>
                     <span
                       className={cn(
-                        "text-xs font-semibold uppercase tracking-[0.14em] underline underline-offset-4",
+                        "text-xs font-semibold tracking-[0.14em] uppercase underline underline-offset-4",
                         tone.cta,
                       )}
                     >

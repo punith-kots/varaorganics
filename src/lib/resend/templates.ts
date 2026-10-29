@@ -37,7 +37,7 @@ function wrap(title: string, body: string): string {
   return `<!doctype html><html><body style="margin:0;background:${IVORY};font-family:Arial,Helvetica,sans-serif;color:${NAVY}">
   <div style="max-width:600px;margin:0 auto;padding:24px">
     <div style="background:${NAVY};padding:20px 24px;border-radius:6px 6px 0 0">
-      <span style="color:${IVORY};font-size:22px;font-weight:bold">Vara<span style="color:${GOLD}">.</span> Organics</span>
+      <span style="color:${IVORY};font-size:22px;font-weight:bold">Vara<span style="color:${GOLD}">.</span> Organic</span>
     </div>
     <div style="background:#fff;padding:28px 24px;border:1px solid #eee;border-top:none">
       <h1 style="font-size:20px;margin:0 0 16px">${title}</h1>
@@ -65,7 +65,8 @@ function itemsTable(order: Order): string {
   return `<table style="width:100%;border-collapse:collapse;font-size:14px">
     ${rows}
     <tr><td style="padding-top:10px;border-top:1px solid #eee">Subtotal</td><td style="padding-top:10px;border-top:1px solid #eee;text-align:right">${formatPrice(order.subtotal)}</td></tr>
-    <tr><td>Shipping</td><td style="text-align:right">${order.shippingAmount === 0 ? "Free" : formatPrice(order.shippingAmount)}</td></tr>
+    <tr><td>Shipping</td><td style="text-align:right">${order.shippingAmount - (order.codFee ?? 0) === 0 ? "Free" : formatPrice(order.shippingAmount - (order.codFee ?? 0))}</td></tr>
+    ${(order.codFee ?? 0) > 0 ? `<tr><td>COD charges:</td><td style="text-align:right">${formatPrice(order.codFee!)}</td></tr>` : ""}
     ${taxRow}
     <tr><td style="font-weight:bold;padding-top:6px">Total</td><td style="font-weight:bold;padding-top:6px;text-align:right">${formatPrice(order.totalAmount)}</td></tr>
   </table>`;
@@ -80,7 +81,7 @@ function addressBlock(order: Order): string {
 
 const STORY =
   '<p style="font-size:13px;color:#666;line-height:1.7;margin-top:20px;border-top:1px solid #eee;padding-top:16px">' +
-  "Vara Organics brings pure A2 Bilona ghee, wood-pressed oils and raw wild honey from Indian farms to your kitchen — " +
+  "Vara Organic brings pure A2 Bilona ghee, wood-pressed oils and raw wild honey from Indian farms to your kitchen — " +
   "traditional methods, small batches, nothing added. Scan the QR on your jar to see the exact lab report for your batch.</p>";
 
 function trackingLine(order: Order): string {

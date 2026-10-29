@@ -80,7 +80,7 @@ export async function LabReports({ category }: { category: ReportCategory }) {
           Lab reports & accreditation
         </h1>
         <p className="text-navy/65 text-base leading-relaxed font-light">
-          These are the supporting laboratory documents currently supplied to Vara Organics. We
+          These are the supporting laboratory documents currently supplied to Vara Organic. We
           publish the names, dates and report details exactly as they appear in the original files.
         </p>
       </div>

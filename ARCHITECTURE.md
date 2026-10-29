@@ -1,4 +1,4 @@
-# ARCHITECTURE.md — Vara Organics (Varixa Global)
+# ARCHITECTURE.md — Vara Organic (Varixa Global)
 
 D2C storefront. **Next.js 16 App Router · React 19 · TypeScript strict · Tailwind v4 · Supabase ·
 Razorpay · Shiprocket · Resend.** SSR/SSG/ISR on a Node runtime (Hostinger). No static export.
@@ -188,7 +188,7 @@ hosting is insufficient (needs a Node server for SSR/API/ISR/webhooks).
 | **C6** | Learn slugs differ **between the two docs**: Dev Kit §07 has `/learn/a2-vs-a1-ghee`, `/learn/how-to-verify-organic-honey`; Learn Brief + prompt have `-difference`, `how-to-check-honey-is-pure`, `what-is-raw-honey`, `what-is-ghani-pressing`. | Follow **Learn Brief + prompt** slug list (7 launch articles). |
 | **C7** | Learn brief §07 puts `REVALIDATE_SECRET` **in the URL query string**. Prompt: don't use query string if a header works. | Send secret via **`x-revalidate-secret` header** (Supabase webhooks support custom headers). |
 | **C8** | Design HTML shows **Coconut Oil, Mustard Honey, ghee 250 ml, honey 250 g/1 kg** not in the fixed launch list. | Seed as **`active=false`** placeholders; not routed at launch. **CONFIRM.** |
-| **C9** | Dev Kit "own farm" vs "Gau Organics **supplies**" narrative; several **prices/batches are sample data**; FSSAI "apply pending". | Treat as **editable seed content / placeholders**, none fabricated as schema claims. Priced/dated items flagged **CONFIRM** (see ASSUMPTIONS §C, D). |
+| **C9** | Dev Kit "own farm" vs "Gau Organic **supplies**" narrative; several **prices/batches are sample data**; FSSAI "apply pending". | Treat as **editable seed content / placeholders**, none fabricated as schema claims. Priced/dated items flagged **CONFIRM** (see ASSUMPTIONS §C, D). |
 | **C10** | Dev Kit "Razorpay React SDK — `npm install razorpay`" (that package is **server-side**). | Server SDK for order-create/verify; **client uses Razorpay `checkout.js` with the public key id only**. |
 | **C11** | Revalidate timings: homepage 60 s (Dev Kit) vs learn 300 s (brief); product "SSR or SSG". | Per-route table §1. Homepage 60, collections/products/learn 300, verify/LP/order dynamic. |
 | **C12** | Missing Brand Book / Label Spec / Shopify Checklist / logo SVG. | Tokens from design CSS; wordmark rebuilt; label/nutrition/ingredients are placeholders. **CONFIRM.** |

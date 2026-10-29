@@ -14,6 +14,7 @@ export function ComboStickyBar({ combo }: { combo: Combo }) {
   function add() {
     addItem({
       variantId: combo.checkout.variantId,
+      sku: combo.checkout.sku,
       productId: combo.checkout.productId,
       slug: combo.slug,
       routePrefix: "combos",

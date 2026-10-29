@@ -4,6 +4,7 @@ import type { Order } from "@/types";
 
 const mocks = vi.hoisted(() => ({
   order: null as Order | null,
+  confirmCapturedPayment: vi.fn(),
   sendEmail: vi.fn(),
   sendResendEvent: vi.fn(),
   sendWhatsAppTemplate: vi.fn(),
@@ -16,6 +17,7 @@ vi.mock("@/lib/validation/env", () => ({
   USE_MOCK_DATA: true,
   SITE_URL: "https://www.varaorganic.com",
 }));
+vi.mock("@/lib/razorpay/server", () => ({ confirmCapturedPayment: mocks.confirmCapturedPayment }));
 vi.mock("@/lib/supabase/admin", () => ({ getAdminSupabase: () => null }));
 vi.mock("@/features/products/queries", () => ({ getVariantById: vi.fn() }));
 vi.mock("@/features/settings/queries", () => ({ getSiteSettings: vi.fn() }));
@@ -36,7 +38,11 @@ vi.mock("@/features/orders/store", () => ({
   findOrderIdByIdempotency: vi.fn(),
 }));
 
-import { finalizePaidOrder, markPaymentFailedByRazorpayOrder } from "@/features/orders/service";
+import {
+  finalizePaidOrder,
+  finalizeByRazorpayOrder,
+  markPaymentFailedByRazorpayOrder,
+} from "@/features/orders/service";
 
 function pendingOrder(overrides: Partial<Order> = {}): Order {
   return {
@@ -79,6 +85,9 @@ function pendingOrder(overrides: Partial<Order> = {}): Order {
     batchNumber: "GHE-2024-047",
     utm: { source: null, medium: null, campaign: null },
     notes: null,
+    smsOptIn: false,
+    smsOptInAt: null,
+    smsConsentText: null,
     createdAt: "2026-08-21T12:00:00.000Z",
     ...overrides,
   };
@@ -88,6 +97,7 @@ describe("successful order email", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mocks.order = pendingOrder();
+    mocks.confirmCapturedPayment.mockResolvedValue(true);
     mocks.sendEmail.mockResolvedValue({ ok: true });
     mocks.sendResendEvent.mockResolvedValue({ ok: true });
     mocks.sendWhatsAppTemplate.mockResolvedValue({ ok: true });
@@ -100,6 +110,26 @@ describe("successful order email", () => {
       trackingUrl: null,
     });
     mocks.findOrderByRazorpayOrderId.mockImplementation(async () => mocks.order);
+  });
+
+  it("does not mark authorized-only payments paid or send fulfillment notifications", async () => {
+    mocks.confirmCapturedPayment.mockResolvedValue(false);
+    await expect(finalizeByRazorpayOrder("order_test", "pay_test")).rejects.toMatchObject({
+      code: "payment_not_captured",
+    });
+    expect(mocks.order?.paymentStatus).toBe("pending");
+    expect(mocks.sendEmail).not.toHaveBeenCalled();
+    expect(mocks.createShipment).not.toHaveBeenCalled();
+  });
+  it("finalizes a captured payment only after checking the stored total", async () => {
+    await finalizeByRazorpayOrder("order_test", "pay_test");
+    expect(mocks.confirmCapturedPayment).toHaveBeenCalledWith(
+      "pay_test",
+      "order_test",
+      1399,
+      "INR",
+    );
+    expect(mocks.order?.paymentStatus).toBe("paid");
   });
 
   it("emails the customer after payment succeeds even if shipment creation fails", async () => {

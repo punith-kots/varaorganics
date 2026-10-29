@@ -1,4 +1,4 @@
-# ASSUMPTIONS.md — Vara Organics
+# ASSUMPTIONS.md — Vara Organic
 
 Recorded during Phase 1 analysis (2026-07-11). Each assumption is a decision made because a
 document was silent, contradictory, or a required asset/credential was unavailable. Anything
@@ -12,7 +12,7 @@ marked **CONFIRM** must be validated by Varixa Global before go-live.
 | `lead.txt` | ✅ Yes | Two Bengaluru contact records used as seed config (**CONFIRM**). |
 | `Vara_Organics_Developer_Kit.docx` (x2, identical) | ✅ Yes | Technical brief. |
 | `Vara_Organics_Learn_Hub_Brief.docx` | ✅ Yes | `/learn` brief. |
-| `Vara_Organics_Brand_Book.html` | ❌ **Missing** | Brand tokens reconstructed from the `:root` CSS variables in `vara-organics-v2.html` + the prompt's brand values. Logo is a **text wordmark** ("Vara." + "Organics") from the design; **no SVG logo file supplied** → rebuilt as an accessible inline SVG/HTML wordmark. **CONFIRM** if an official logo SVG exists. |
+| `Vara_Organics_Brand_Book.html` | ❌ **Missing** | Brand tokens reconstructed from the `:root` CSS variables in `vara-organics-v2.html` + the prompt's brand values. Logo is a **text wordmark** ("Vara." + "Organic") from the design; **no SVG logo file supplied** → rebuilt as an accessible inline SVG/HTML wordmark. **CONFIRM** if an official logo SVG exists. |
 | `Vara_Organics_Shopify_Checklist.docx` | ❌ **Missing** | Page structure taken from Dev Kit §04–§10 instead (fully covers it). |
 | `Vara_Organics_Label_Spec.docx` | ❌ **Missing** | Ingredient statements, manufacturer/FSSAI details, nutritional values are **placeholders** (**CONFIRM / REQUIRES FINAL CONTENT**). |
 
@@ -42,7 +42,7 @@ marked **CONFIRM** must be validated by Varixa Global before go-live.
 
 11. **No ratings/reviews at launch.** Product JSON-LD **omits `aggregateRating` entirely** (an empty `aggregateRating` is invalid and can be penalized) — overrides the Dev Kit note "aggregateRating (empty at launch)".
 12. **No invented certifications.** "NABL tested", "70+ parameters", "A2 Gir cow" appear in supplied copy and are rendered as **brand-authored marketing content owned by the DM manager**, not as schema `certification` claims. FSSAI number is "apply pending" in the design → kept as an **empty env-configurable field**, never fabricated.
-13. Farm/supplier narrative ("Gau Organics, Kota/Jaipur, Rajasthan") is treated as editable brand-story content, seeded from the design copy.
+13. Farm/supplier narrative ("Gau Organic, Kota/Jaipur, Rajasthan") is treated as editable brand-story content, seeded from the design copy.
 
 ## E. Contact / business data
 

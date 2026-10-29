@@ -5,7 +5,7 @@ import { getSiteSettings } from "@/features/settings/queries";
 import { buildMetadata } from "@/components/seo/metadata";
 
 export const metadata: Metadata = {
-  ...buildMetadata({ title: "Your Cart", description: "Review your Vara Organics cart.", path: "cart" }),
+  ...buildMetadata({ title: "Your Cart", description: "Review your Vara Organic cart.", path: "cart" }),
   robots: { index: false, follow: true },
 };
 

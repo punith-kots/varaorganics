@@ -1,3 +1,4 @@
+import type { Order } from "@/types";
 import "server-only";
 import { createPendingOrder, attachRazorpayOrder, finalizePaidOrder } from "@/features/orders/service";
 import { createRazorpayOrder, razorpayPublicKeyId } from "@/lib/razorpay/server";
@@ -23,8 +24,9 @@ export type CheckoutResult =
 export async function initiateCheckout(
   input: CreateOrderInput,
   idempotencyKey: string,
+  analyticsContext?: Order["analyticsContext"],
 ): Promise<CheckoutResult> {
-  const { order } = await createPendingOrder(input, idempotencyKey);
+  const { order } = await createPendingOrder(input, idempotencyKey, analyticsContext);
 
   if (order.paymentMethod === "cod") {
     // COD is "placed" immediately (payment collected on delivery).

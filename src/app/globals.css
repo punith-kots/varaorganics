@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /*
-  Vara Organics design tokens.
+  Vara Organic design tokens.
   Values reconstructed from vara-organics-v2.html :root (the supplied design
   reference) and the brand values in the Developer Kit. Tailwind v4 CSS-first
   config: these become utilities like bg-navy, text-gold, font-serif, etc.

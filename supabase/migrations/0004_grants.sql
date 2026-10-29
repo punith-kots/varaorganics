@@ -1,4 +1,4 @@
--- Vara Organics — table privileges.
+-- Vara Organic — table privileges.
 --
 -- Postgres needs BOTH of these for a client to read a row:
 --   1. a table-level GRANT (this file)

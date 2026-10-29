@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { QualityImageOverlay } from "@/components/product/QualityImageOverlay";
 import { Badge } from "@/components/ui/Badge";
 import { CheckIcon } from "@/components/ui/Icons";
 import type {
@@ -252,6 +253,7 @@ export function LpFaq({ faqs }: { faqs: FaqItem[] }) {
 export function LpHeroImage({ src, alt }: { src: string | null; alt: string }) {
   return (
     <div className="relative aspect-square overflow-hidden rounded-lg border border-gold-lt/20">
+      {src && <QualityImageOverlay name={alt} />}
       {src ? (
         <Image src={src} alt={alt} fill priority sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
       ) : (

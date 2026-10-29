@@ -16,7 +16,7 @@ secrets throw a clear error on first use in production if missing.
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | prod | Anon key; RLS-limited public reads only. |
 | `NEXT_PUBLIC_RAZORPAY_KEY_ID` | prod | Public Razorpay key id (checkout.js). **Secret is separate.** |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | no | GA4 ID. Defaults to `G-EQGM74S1KF` when unset; explicitly blank disables direct GA4. Loads after cookie consent. If a GTM container is configured, manage GA4 in that container instead. |
-| `NEXT_PUBLIC_META_PIXEL_ID` | no | Meta Pixel id. Blank = pixel off. |
+| `NEXT_PUBLIC_META_PIXEL_ID` | no | Meta Pixel ID. Defaults to `1623537109216457` when unset; explicitly blank disables direct Pixel tracking. Loads after cookie consent. When GTM is configured, manage the Pixel in that container instead. |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | no | Search Console verification token. |
 
 ## Server-only (never `NEXT_PUBLIC_`)

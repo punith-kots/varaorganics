@@ -29,7 +29,7 @@ export const homeFaqs: FaqItem[] = [
   {
     question: "What is your return policy?",
     answer:
-      "Due to the nature of our food products, we do not accept returns based on taste, colour, or odour preference, as natural variation is expected in unprocessed products. We accept returns only for products damaged in transit, wrong items delivered, or genuine safety concerns, reported within 48 hours of delivery with photo or video proof.",
+      "Due to the nature of our food products, we do not accept returns based on taste, colour, or odour preference, as natural variation is expected in unprocessed products. Returns for expired, spoiled, damaged or incorrect products only. Report within 24 hours of delivery with photo proof.",
   },
   {
     question: "Where does Vara Organic ship to?",

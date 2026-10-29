@@ -14,7 +14,7 @@ export const articles: Article[] = [
     excerpt:
       "Bilona is the traditional hand-churned method of making ghee from cultured curd. Here's how it differs from industrial ghee — and why it matters.",
     category: "ghee",
-    coverImage: "/placeholders/ghee.svg",
+    coverImage: "/product-images/vara-ghee-square.jpg",
     bodyMarkdown: `Bilona ghee is made the slow, traditional way — from cultured curd, hand-churned into butter, then simmered into ghee.
 
 # The bilona method, step by step
@@ -59,7 +59,7 @@ You should never have to take "pure" on trust. Scan the QR on the jar and read t
     excerpt:
       "A2 and A1 refer to a protein in cow's milk. Here's what that means for ghee and why breed matters.",
     category: "ghee",
-    coverImage: "/placeholders/ghee.svg",
+    coverImage: "/product-images/vara-ghee-square.jpg",
     bodyMarkdown: `A2 and A1 describe the type of beta-casein protein in milk, determined by the cow's breed and genetics.
 
 # What is A2 protein?
@@ -101,7 +101,7 @@ Sourcing transparency, the making method, and independent lab testing matter mor
     excerpt:
       "A step-by-step guide to understanding the key parameters on a ghee lab report so you can verify purity yourself.",
     category: "ghee",
-    coverImage: "/placeholders/ghee.svg",
+    coverImage: "/product-images/vara-ghee-square.jpg",
     bodyMarkdown: `A lab report turns "pure" from a claim into something you can check. Here's how to read one.
 
 # Step 1: Check the batch number
@@ -323,7 +323,7 @@ Raw honey is not recommended for infants under 12 months, in line with standard 
 /** Hub-level FAQs (Learn Brief §04 — FAQPage schema on the hub). */
 export const hubFaqs = [
   {
-    question: "How does Vara Organics prove product purity?",
+    question: "How does Vara Organic prove product purity?",
     answer:
       "Every batch is independently lab-tested and each jar carries a batch-specific QR code linking to its report.",
   },

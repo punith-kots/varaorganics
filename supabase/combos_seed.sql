@@ -1,4 +1,4 @@
--- Vara Organics — combos seed. Run AFTER 0006_combos.sql (and the base seed).
+-- Vara Organic — combos seed. Run AFTER 0006_combos.sql (and the base seed).
 -- Idempotent via stable slugs/SKUs. Rows start unpublished so the brand owner
 -- can review the names, prices and contents in Admin before making them live.
 --

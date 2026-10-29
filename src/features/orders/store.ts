@@ -43,6 +43,7 @@ export async function saveOrder(order: Order, idempotencyKey: string): Promise<v
       shipping_address: order.address,
       subtotal: order.subtotal,
       shipping_amount: order.shippingAmount,
+      cod_fee: order.codFee ?? 0,
       tax_amount: order.taxAmount,
       total_amount: order.totalAmount,
       currency: order.currency,
@@ -56,12 +57,19 @@ export async function saveOrder(order: Order, idempotencyKey: string): Promise<v
       utm_campaign: order.utm.campaign,
       idempotency_key: idempotencyKey,
       notes: order.notes,
+      analytics_context: order.analyticsContext ?? null,
+      paid_at: order.paidAt ?? null,
+      meta_purchase_sent_at: order.metaPurchaseSentAt ?? null,
+      sms_opt_in: order.smsOptIn,
+      sms_opt_in_at: order.smsOptInAt,
+      sms_consent_text: order.smsConsentText,
     });
     if (error) throw error;
     const { error: itemsError } = await sb.from("order_items").insert(
       order.items.map((i) => ({
         order_id: order.id,
         product_name: i.productName,
+        item_category: i.category ?? null,
         size: i.size,
         sku: i.sku,
         quantity: i.quantity,
@@ -147,7 +155,12 @@ export async function findOrderByAwb(awb: string): Promise<Order | null> {
 /** Append a shipment milestone (audit trail for the tracking page). */
 export async function recordShipmentEvent(
   orderId: string,
-  event: { awb: string | null; status: string; statusDetail?: string; raw?: Record<string, unknown> },
+  event: {
+    awb: string | null;
+    status: string;
+    statusDetail?: string;
+    raw?: Record<string, unknown>;
+  },
 ): Promise<void> {
   const sb = getAdminSupabase();
   if (USE_MOCK_DATA || !sb) {
@@ -208,6 +221,8 @@ export async function updateOrder(id: string, patch: Partial<Order>): Promise<vo
       .from("orders")
       .update({
         payment_status: patch.paymentStatus,
+        paid_at: patch.paidAt,
+        meta_purchase_sent_at: patch.metaPurchaseSentAt,
         fulfillment_status: patch.fulfillmentStatus,
         // The webhook looks orders up by razorpay_order_id — if this is not
         // persisted, a captured payment can never be matched to its order.
@@ -280,6 +295,7 @@ function rowToOrder(row: Record<string, unknown>): Order {
     address: row.shipping_address as Order["address"],
     items: items.map((i) => ({
       productName: i.product_name as string,
+      category: (i.item_category as string) ?? undefined,
       size: i.size as string,
       sku: i.sku as string,
       quantity: i.quantity as number,
@@ -288,6 +304,7 @@ function rowToOrder(row: Record<string, unknown>): Order {
     })),
     subtotal: row.subtotal as number,
     shippingAmount: row.shipping_amount as number,
+    codFee: Number(row.cod_fee ?? 0),
     taxAmount: row.tax_amount as number,
     totalAmount: row.total_amount as number,
     currency: row.currency as string,
@@ -307,6 +324,12 @@ function rowToOrder(row: Record<string, unknown>): Order {
       campaign: (row.utm_campaign as string) ?? null,
     },
     notes: (row.notes as string) ?? null,
+    analyticsContext: (row.analytics_context as Order["analyticsContext"]) ?? null,
+    paidAt: (row.paid_at as string) ?? null,
+    metaPurchaseSentAt: (row.meta_purchase_sent_at as string) ?? null,
+    smsOptIn: row.sms_opt_in === true,
+    smsOptInAt: (row.sms_opt_in_at as string) ?? null,
+    smsConsentText: (row.sms_consent_text as string) ?? null,
     createdAt: (row.created_at as string) ?? new Date().toISOString(),
   };
 }

@@ -1,3 +1,4 @@
+import { getDisplayVariant } from "./helpers";
 import "server-only";
 import { cache } from "react";
 import { getServerSupabase } from "@/lib/supabase/server";
@@ -75,7 +76,7 @@ export const resolveProductRoute = cache(
     for (const product of products) {
       if (product.routePrefix !== routePrefix) continue;
       const variant = product.variants.find((v) => v.active && v.routeSlug === slug);
-      if (variant) return { product, variant };
+      if (variant || product.slug === slug) return { product, variant: getDisplayVariant(product) };
     }
     return null;
   },
@@ -95,18 +96,16 @@ export const getRouteSlugsForPrefix = cache(async (routePrefix: Category): Promi
 });
 
 /** Related products in the same category (excludes the given product). */
-export const getRelatedProducts = cache(
-  async (product: Product, limit = 3): Promise<Product[]> => {
-    const products = await getStoreProducts();
-    return products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, limit);
-  },
-);
+export const getRelatedProducts = cache(async (product: Product, limit = 3): Promise<Product[]> => {
+  const products = await getStoreProducts();
+  return products
+    .filter((p) => p.category === product.category && p.id !== product.id)
+    .slice(0, limit);
+});
 
 /** Resolve a product + route path from any variant routeSlug (any category). */
 export const findByRouteSlug = cache(
-  async (
-    routeSlug: string,
-  ): Promise<{ product: Product; path: string } | null> => {
+  async (routeSlug: string): Promise<{ product: Product; path: string } | null> => {
     const products = await getStoreProducts();
     for (const product of products) {
       const variant = product.variants.find((v) => v.active && v.routeSlug === routeSlug);

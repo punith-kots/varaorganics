@@ -22,7 +22,7 @@ export async function productMetadata(prefix: Category, slug: string): Promise<M
   return buildMetadata({
     title,
     description,
-    path: `${prefix}/${slug}`,
+    path: `${prefix}/${variant.routeSlug ?? product.slug}`,
     ogImage: product.images[0] ? `${product.images[0].url}` : undefined,
     type: "website",
   });

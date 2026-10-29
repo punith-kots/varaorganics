@@ -1,5 +1,5 @@
 -- ============================================================================
--- Vara Organics — live data fixes for the brand-owner's 26-item list.
+-- Vara Organic — live data fixes for the brand-owner's 26-item list.
 -- Paste this into the Supabase SQL editor (Project → SQL → New query) and run.
 -- Safe to run more than once (idempotent).
 --

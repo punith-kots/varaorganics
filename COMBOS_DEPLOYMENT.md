@@ -2,7 +2,7 @@
 
 The application code and the database setup are deployed separately. Complete these steps in order:
 
-1. Open the Supabase SQL Editor for the Vara Organics project.
+1. Open the Supabase SQL Editor for the Vara Organic project.
 2. Run [`supabase/migrations/0006_combos.sql`](supabase/migrations/0006_combos.sql).
 3. Run [`supabase/combos_seed.sql`](supabase/combos_seed.sql).
 4. Redeploy the application.

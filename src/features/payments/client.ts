@@ -99,7 +99,7 @@ export async function openRazorpayCheckout(
     amount: result.amount,
     currency: result.currency,
     order_id: result.razorpayOrderId,
-    name: "Vara Organics",
+    name: "Vara Organic",
     description: `Order ${result.orderNumber}`,
     prefill,
     theme: { color: "#15284C" },

@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { OrderInvoice } from "@/components/checkout/OrderInvoice";
 import { OrderThankYou } from "@/components/checkout/OrderThankYou";
 import type { Order } from "@/types";
 
@@ -43,6 +44,9 @@ const order: Order = {
   batchNumber: "GHE-2026-047",
   utm: { source: null, medium: null, campaign: null },
   notes: null,
+  smsOptIn: false,
+  smsOptInAt: null,
+  smsConsentText: null,
   createdAt: "2026-09-05T10:00:00.000Z",
 };
 
@@ -51,7 +55,7 @@ describe("order thank-you page content", () => {
     render(<OrderThankYou order={order} />);
 
     expect(
-      screen.getByRole("img", { name: "Thank you — we're delighted you chose Vara Organics" }),
+      screen.getByRole("img", { name: "Thank you — we're delighted you chose Vara Organic" }),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { level: 1, name: "Thank you, Renuka" }),
@@ -67,4 +71,24 @@ describe("order thank-you page content", () => {
       order.trackingUrl,
     );
   });
+});
+
+it("shows a separate COD fee on confirmation and invoice", () => {
+  const cod = {
+    ...order,
+    paymentMethod: "cod" as const,
+    paymentStatus: "cod_pending" as const,
+    codFee: 99,
+    shippingAmount: 99,
+    totalAmount: 1498,
+  };
+  const page = render(<OrderThankYou order={cod} />);
+  expect(screen.getByText("COD charges:")).toBeInTheDocument();
+  expect(screen.getByText("₹99")).toBeInTheDocument();
+  page.unmount();
+  render(<OrderInvoice order={cod} />);
+  expect(screen.getByText("COD charges:")).toBeInTheDocument();
+  expect(screen.getByText("₹99")).toBeInTheDocument();
+  expect(screen.getByText("Free")).toBeInTheDocument();
+  expect(screen.getByText("₹1,498")).toBeInTheDocument();
 });

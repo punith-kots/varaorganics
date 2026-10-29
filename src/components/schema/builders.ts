@@ -1,5 +1,6 @@
+import { COMBO_PRODUCT_IMAGES } from "@/data/combo-images";
 import { site, canonical } from "@/config/site";
-import type { Article, FaqItem, Product, ProductBatch, ProductVariant } from "@/types";
+import type { Article, Combo, FaqItem, Product, ProductBatch, ProductVariant } from "@/types";
 
 /**
  * JSON-LD builders. Values are structural; marketing-owned copy comes from the
@@ -61,9 +62,7 @@ export function productSchema(product: Product, variant: ProductVariant, path: s
       "@type": "Offer",
       priceCurrency: "INR",
       price: variant.price,
-      availability: inStock
-        ? "https://schema.org/InStock"
-        : "https://schema.org/OutOfStock",
+      availability: inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       url: canonical(path),
       seller: { "@type": "Organization", name: site.legalName },
     },
@@ -149,5 +148,33 @@ export function collectionPageSchema(name: string, path: string, itemPaths: stri
     name,
     url: canonical(path),
     hasPart: itemPaths.map((p) => ({ "@type": "WebPage", url: canonical(p) })),
+  };
+}
+
+/** Keep structured offers and photos in sync with the displayed combo cards. */
+export function comboProductSchema(combo: Combo) {
+  const url = canonical(`combos#${combo.slug}`);
+  const images = [
+    ...new Set(
+      combo.contents.map((item) => COMBO_PRODUCT_IMAGES[item.productSlug]).filter(Boolean),
+    ),
+  ];
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": url,
+    name: combo.names.english,
+    description: combo.tagline,
+    url,
+    image: images.map((image) => canonical(image)),
+    brand: { "@type": "Brand", name: "Vara Organic" },
+    sku: combo.checkout.sku,
+    offers: {
+      "@type": "Offer",
+      url,
+      price: combo.comboPrice,
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock",
+    },
   };
 }

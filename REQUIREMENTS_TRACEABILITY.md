@@ -1,4 +1,4 @@
-# REQUIREMENTS_TRACEABILITY.md — Vara Organics
+# REQUIREMENTS_TRACEABILITY.md — Vara Organic
 
 Maps every requirement (from the build prompt §1–§24, Developer Kit, and Learn Hub Brief) to a
 Route / Component / DB table / API route / Test, with a status. Status legend:

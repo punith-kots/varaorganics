@@ -4,11 +4,10 @@ import { Container, Eyebrow, Section } from "@/components/ui/layout-primitives";
 import { Accordion } from "@/components/ui/Accordion";
 import { Breadcrumb } from "@/components/learn/Breadcrumb";
 import { JsonLd } from "@/components/schema/JsonLd";
-import { breadcrumbSchema, faqSchema } from "@/components/schema/builders";
+import { breadcrumbSchema, comboProductSchema, faqSchema } from "@/components/schema/builders";
 import { buildMetadata } from "@/components/seo/metadata";
 import { CombosExplorer } from "@/components/combos/CombosExplorer";
 import { getPublishedCombos } from "@/features/combos/queries";
-import { canonical } from "@/config/site";
 import { ComboStickyBar } from "@/components/combos/ComboStickyBar";
 import type { FaqItem } from "@/types";
 
@@ -16,7 +15,7 @@ import type { FaqItem } from "@/types";
 export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-  title: "Vara Organics Combo Offers — Traditional Kitchen Combos, NABL Tested",
+  title: "Vara Organic Combo Offers — Traditional Kitchen Combos, NABL Tested",
   description:
     "A2 Bilona Ghee, Raw Honey and Wood Pressed Oil combos. Named from Indian kitchen traditions. All NABL tested. Free Bengaluru delivery.",
   path: "combos",
@@ -70,18 +69,7 @@ export default async function CombosPage() {
             itemListElement: combos.map((c, i) => ({
               "@type": "ListItem",
               position: i + 1,
-              item: {
-                "@type": "Product",
-                name: c.names.english,
-                description: c.tagline,
-                url: canonical(`combos#${c.slug}`),
-                offers: {
-                  "@type": "Offer",
-                  priceCurrency: "INR",
-                  price: c.comboPrice,
-                  availability: "https://schema.org/InStock",
-                },
-              },
+              item: comboProductSchema(c),
             })),
           }}
         />

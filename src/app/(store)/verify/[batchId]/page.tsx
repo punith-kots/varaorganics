@@ -22,7 +22,7 @@ export async function generateMetadata({
   const { batchId } = await params;
   return buildMetadata({
     title: `Verify batch ${batchId}`,
-    description: "Verify your Vara Organics batch and view its lab report.",
+    description: "Verify your Vara Organic batch and view its lab report.",
     path: `verify/${batchId}`,
     noindex: true,
   });

@@ -11,7 +11,7 @@ import { contactLocations } from "@/config/contact";
 export const metadata: Metadata = buildMetadata({
   title: "Contact Us",
   description:
-    "Get in touch with Vara Organics in Bengaluru — call, message or find us on the map.",
+    "Get in touch with Vara Organic in Bengaluru — call, message or find us on the map.",
   path: "contact",
 });
 

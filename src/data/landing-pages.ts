@@ -46,7 +46,7 @@ export const landingPages: LandingPage[] = [
     showLabCard: true,
     showComparison: true,
     comparisonRows: [
-      { brand: "Vara Organics", price: "₹1,999", labTested: "70 parameters — NABL verified", isUs: true },
+      { brand: "Vara Organic", price: "₹1,999", labTested: "70 parameters — NABL verified", isUs: true },
       { brand: "Two Brothers", price: "₹3,999", labTested: "Not published" },
       { brand: "Anveshan", price: "₹3,699", labTested: "Not published" },
       { brand: "Farmse (actual selling price)", price: "₹1,540", labTested: "Not published" },
@@ -75,7 +75,7 @@ export const landingPages: LandingPage[] = [
       {
         question: "What if I don't like it?",
         answer:
-          "7-day no-questions return. Full refund if the ghee doesn't taste like the best you've had. We mean this.",
+          "Returns for expired, spoiled, damaged or incorrect products only. Report within 24 hours of delivery with photo proof.",
       },
       {
         question: "How quickly does it arrive?",
@@ -89,7 +89,7 @@ export const landingPages: LandingPage[] = [
   {
     slug: "pure-ghee-truth",
     announcement:
-      "Lab report on every batch · Free Bangalore delivery ₹999+ · 7-day return guarantee",
+      "Lab report on every batch · Free Bangalore delivery ₹999+ · Report delivery issues within 24 hours",
     eyebrow: "What we found when we looked closely",
     headline: "The ghee your grandmother knew.",
     headlineEm: "Proved, not claimed.",
@@ -139,7 +139,7 @@ export const landingPages: LandingPage[] = [
     storyHeading: "Why we started",
     storyCopy:
       "When our daughter was born, we started looking for ghee we could completely trust. Not marketing-trust — proof-trust. A lab report. A named farm. A batch number we could check.\n\nWe found the farm in Rajasthan. We found the laboratory in Jaipur. We asked one question to every supplier: will you let us publish the test results on the jar?\n\nThe ones who said yes became Vara.",
-    storyAttribution: "— Founder, Vara Organics",
+    storyAttribution: "— Founder, Vara Organic",
     showProcess: true,
     processSteps: [
       { title: "Farm, Gujarat", body: "Gir cows. Own herd. A2 milk collected at dawn." },
@@ -158,7 +158,7 @@ export const landingPages: LandingPage[] = [
     ],
     showHonest: true,
     honestCopy:
-      "We are a new brand.\n\nWe won't pretend to have hundreds of reviews yet. What we do have is a lab report for every batch — accessible by scanning the QR on your jar. If the ghee does not taste like the best you have had, we will refund you. No questions.\n\nThat is the only promise we need to make.",
+      "We are a new brand.\n\nWe won't pretend to have hundreds of reviews yet. What we do have is a lab report for every batch — accessible by scanning the QR on your jar. Returns for expired, spoiled, damaged or incorrect products only. Report within 24 hours of delivery with photo proof.\n\nThat is the only promise we need to make.",
     faqs: [],
   },
 ];

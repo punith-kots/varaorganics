@@ -23,7 +23,7 @@ export default async function OrderConfirmedPage({
   if (!order) notFound();
 
   const paid = order.paymentStatus === "paid";
-  const cod = order.paymentMethod === "cod";
+  const cod = order.paymentMethod === "cod" && order.paymentStatus === "cod_pending";
 
   if (!paid && !cod) {
     return (
@@ -54,13 +54,8 @@ export default async function OrderConfirmedPage({
 
   return (
     <Container className="bg-ivory py-8 md:py-14">
-      {paid && (
-        <PurchaseTracker
-          orderNumber={order.orderNumber}
-          totalAmount={order.totalAmount}
-          email={order.email}
-          items={order.items}
-        />
+      {(paid || cod) && (
+        <PurchaseTracker order={{ id: order.id, paymentStatus: order.paymentStatus, subtotal: order.subtotal, shippingAmount: order.shippingAmount, taxAmount: order.taxAmount, items: order.items }} />
       )}
 
       <OrderThankYou order={order} />

@@ -12,7 +12,7 @@ const items: { Icon: ComponentType<{ width?: number; height?: number; className?
   { Icon: FlaskIcon, label: "NABL Tested" },
   { Icon: SproutIcon, label: "Own Farm Source" },
   { Icon: TruckIcon, label: "Free Blr ₹999+" },
-  { Icon: RefreshIcon, label: "7-Day Returns" },
+  { Icon: RefreshIcon, label: "24-Hour Issue Reporting" },
   { Icon: QrIcon, label: "QR Traced" },
   { Icon: LogIcon, label: "Ghani Pressed" },
 ];

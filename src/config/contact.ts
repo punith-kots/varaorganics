@@ -1,10 +1,8 @@
 /**
  * Contact locations.
  *
- * Seeded from lead.txt (two Bengaluru records). These are placeholders pending
- * business confirmation — do NOT treat as final. `needsConfirmation: true`
- * surfaces a visible note in the UI until Varixa Global confirms which address
- * is customer-facing and which (if any) is the Shiprocket pickup location.
+ * `needsConfirmation` flags locations still awaiting business confirmation.
+ * These customer-facing addresses do not configure Shiprocket pickup locations.
  */
 export interface ContactLocation {
   label: string;
@@ -26,29 +24,21 @@ function mapsLink(query: string): string {
 export const contactLocations: ContactLocation[] = [
   {
     label: "Bengaluru — Magadi Road",
-    addressLines: ["42, 13th Main, 1st Cross, K P Agrahara", "near Mani Store, Mariyappana Palya"],
-    city: "Bengaluru",
+    addressLines: [
+      "No 128, Pushpa Nilaya, 5th B Cross",
+      "Shantilal Mutta Layout, Seegehalli Gate, Magadi Main Road",
+      "Near SG Marriage Hall",
+    ],
+    city: "Bangalore",
     state: "Karnataka",
-    postalCode: "560023",
+    postalCode: "562130",
     country: "India",
     phone: "+919740835597",
     mapsUrl: mapsLink(
-      "42, 13th main, 1st cross K P Agrahara, Magadi Rd, Mariyappana Palya, Bengaluru 560023",
+      "No 128, Pushpa Nilaya, 5th B Cross, Shantilal Mutta Layout, Seegehalli Gate, Magadi Main Road, Near SG Marriage Hall, Bangalore 562130",
     ),
     active: true,
-    needsConfirmation: true,
-  },
-  {
-    label: "Bengaluru — Austin Town",
-    addressLines: ["1, 1709, opp to BDA Complex", "Austin Town, Neelasandra"],
-    city: "Bengaluru",
-    state: "Karnataka",
-    postalCode: "560047",
-    country: "India",
-    phone: "+917892492882",
-    mapsUrl: mapsLink("1709, opp to BDA Complex, Austin Town, Neelasandra, Bengaluru 560047"),
-    active: true,
-    needsConfirmation: true,
+    needsConfirmation: false,
   },
 ];
 

@@ -38,7 +38,7 @@ describe("Resend server integration", () => {
     mocks.env = {
       RESEND_API_KEY: "re_test",
       RESEND_SEGMENT_ID: "seg_newsletter",
-      EMAIL_FROM: "Vara Organics <no-reply@updates.varaorganic.com>",
+      EMAIL_FROM: "Vara Organic <no-reply@updates.varaorganic.com>",
       EMAIL_REPLY_TO: "hello@varaorganic.com",
     };
     mocks.emailsSend.mockResolvedValue({ data: { id: "email_1" }, error: null });
@@ -57,7 +57,7 @@ describe("Resend server integration", () => {
     expect(result).toEqual({ ok: true });
     expect(mocks.emailsSend).toHaveBeenCalledWith(
       expect.objectContaining({
-        from: "Vara Organics <no-reply@updates.varaorganic.com>",
+        from: "Vara Organic <no-reply@updates.varaorganic.com>",
         replyTo: "hello@varaorganic.com",
       }),
     );

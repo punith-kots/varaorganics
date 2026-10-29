@@ -63,7 +63,7 @@ export async function PUT(req: NextRequest) {
   try {
     const { data: product, error: productError } = await sb.from("products").insert({
       product_name: input.productName, slug, category: input.category, route_prefix: input.category,
-      short_description: `${input.productName}, made with care by Vara Organics.`,
+      short_description: `${input.productName}, made with care by Vara Organic.`,
       long_description: `${input.productName}\n\nEdit this description before publishing.`,
       active: false, featured: false,
     }).select("id").single();

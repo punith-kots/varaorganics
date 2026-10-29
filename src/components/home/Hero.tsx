@@ -1,15 +1,13 @@
+import Image from "next/image";
+import { GheeComparison } from "@/components/product/GheeComparison";
+import { QualityImageOverlay } from "@/components/product/QualityImageOverlay";
 import { ButtonLink } from "@/components/ui/Button";
 import { CheckIcon, QrIcon } from "@/components/ui/Icons";
 import { HeroAddToCart } from "./HeroAddToCart";
 import { formatPrice } from "@/lib/utils";
 import type { Product, ProductVariant } from "@/types";
 
-const diffPills = [
-  "A2 Gir cow — own farm",
-  "70-param NABL tested",
-  "Wooden ghani pressed",
-  "QR batch traceability",
-];
+const diffPills = ["Better Quality", "Better Sourcing", "Better Lab Tested", "Better Value"];
 
 const proofStats = [
   { num: "70+", label: "Lab parameters per batch" },
@@ -37,7 +35,7 @@ export function Hero({
   return (
     <section className="bg-ivory" aria-label="Introduction">
       <div className="mx-auto grid max-w-[1200px] md:grid-cols-2">
-        <div className="flex flex-col justify-center px-6 py-14 md:px-[8%] md:py-20">
+        <div className="flex min-w-0 flex-col justify-center px-6 py-14 md:px-[8%] md:py-20">
           <div className="text-amber mb-3 flex items-center gap-3 text-[11px] font-medium tracking-[0.3em] uppercase">
             <span className="h-px w-6 bg-current" aria-hidden="true" />
             Farm to kitchen · Small-batch &amp; lab-tested
@@ -48,35 +46,32 @@ export function Hero({
           </h1>
 
           {/* Body colour lifted to navy/70 with bold navy keywords (Website Changes §09). */}
-          <p className="mb-6 max-w-[460px] text-base font-light leading-relaxed text-navy/70">
+          <p className="text-navy/70 mb-6 max-w-[460px] text-base leading-relaxed font-light">
             Most ghee on your shelf was made by machine, never tested beyond a handful of
             parameters, and sourced through middlemen. Vara is{" "}
-            <strong className="font-semibold text-navy">bilona hand-churned</strong>,{" "}
-            <strong className="font-semibold text-navy">NABL-tested</strong>, and traced back to a
+            <strong className="text-navy font-semibold">bilona hand-churned</strong>,{" "}
+            <strong className="text-navy font-semibold">NABL-tested</strong>, and traced back to a
             single farm.
           </p>
 
           {/* Premium differentiator pills — Website Changes §09, Option 1:
               600 weight, 1.5px border, ivory bg, dark-green check in a light circle. */}
-          <ul className="mb-9 flex flex-wrap gap-2">
+          <ul className="mb-9 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
             {diffPills.map((pill) => (
               <li
                 key={pill}
-                className="flex items-center gap-2 rounded-full border-[1.5px] border-navy/30 bg-ivory px-5 py-2.5 text-[15px] font-semibold text-navy"
+                className="border-navy/30 bg-ivory text-navy flex min-w-0 items-center gap-1.5 rounded-full border-[1.5px] px-2.5 py-2.5 text-[11px] leading-snug font-semibold min-[360px]:text-xs sm:gap-2 sm:px-5 sm:text-[15px]"
               >
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#1F6B3A]/[0.12] text-[#1F6B3A]">
+                <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#1F6B3A]/[0.12] text-[#1F6B3A] sm:h-5 sm:w-5">
                   <CheckIcon width={12} height={12} strokeWidth={3} />
                 </span>
-                {pill}
+                <span>{pill}</span>
               </li>
             ))}
           </ul>
 
           <div className="mb-12 flex flex-col gap-3">
-            <ButtonLink
-              href="#home-products"
-              className="self-start"
-            >
+            <ButtonLink href="#home-products" className="self-start">
               Shop Vara Ghee — {formatPrice(variant.price)}
             </ButtonLink>
             <span className="text-navy/45 text-xs font-light">
@@ -84,11 +79,14 @@ export function Hero({
             </span>
           </div>
 
+          <div className="mb-10 md:hidden">
+            <GheeComparison batch={batch} />
+          </div>
           <dl className="border-navy/10 flex border-t pt-7">
             {proofStats.map((stat, i) => (
               <div
                 key={stat.label}
-                className={`flex-1 ${i > 0 ? "border-navy/10 border-l pl-5" : ""} ${i < proofStats.length - 1 ? "pr-5" : ""}`}
+                className={`flex-1 ${i > 0 ? "border-navy/10 border-l pl-2 sm:pl-5" : ""} ${i < proofStats.length - 1 ? "pr-2 sm:pr-5" : ""}`}
               >
                 <dd className="text-navy font-serif text-3xl leading-none font-semibold">
                   {stat.num}
@@ -104,54 +102,71 @@ export function Hero({
             (no dead space below the card). */}
         <div className="from-navy-mid to-navy-deep relative flex items-center justify-center overflow-hidden bg-gradient-to-b px-6 py-12 md:px-[5%] md:py-16">
           <div className="flex w-full max-w-[340px] flex-col gap-4">
-          <div className="border-gold-lt/20 w-full rounded-lg border bg-white/[0.06] p-6">
-            <p className="text-gold-lt/70 mb-3 text-[9.5px] font-semibold tracking-[0.28em] uppercase">
-              Featured product
-            </p>
-            <h2 className="text-ivory mb-1.5 font-serif text-[22px] font-semibold">
-              {product.productName}
-            </h2>
-            <p className="text-ivory/50 mb-5 flex items-center gap-1.5 text-xs font-light">
-              <span className="bg-gold inline-block h-1.5 w-1.5 rounded-full" aria-hidden="true" />
-              Traceably sourced
-            </p>
-
-            {batch && (
-              <div className="mb-4 rounded-md bg-black/20 p-4">
-                <p className="text-gold-lt/70 mb-2.5 text-[10px] font-semibold tracking-[0.2em] uppercase">
-                  Live batch report · {batch.batchNumber}
-                </p>
-                {batch.labParameters.slice(0, 4).map((p) => (
-                  <div
-                    key={p.id}
-                    className="flex items-center justify-between border-b border-white/5 py-1.5 text-xs last:border-0"
-                  >
-                    <span className="text-ivory/45 font-light">{p.name}</span>
-                    <span className="text-gold-lt font-medium">{p.result}</span>
-                  </div>
-                ))}
+            {product.images[0] && (
+              <div className="relative aspect-square overflow-hidden rounded-lg">
+                <Image
+                  src={product.images[0].url}
+                  alt={product.images[0].alt}
+                  fill
+                  sizes="(max-width: 768px) 90vw, 340px"
+                  className="object-contain"
+                />
+                <QualityImageOverlay name={product.productName} />
               </div>
             )}
-
-            <div className="mt-4 flex items-center justify-between">
-              <p className="text-ivory font-serif text-2xl font-semibold">
-                {formatPrice(variant.price)}{" "}
-                <span className="text-ivory/40 text-[13px] font-light">/ {variant.unitLabel}</span>
+            <div className="border-gold-lt/20 w-full rounded-lg border bg-white/[0.06] p-6">
+              <p className="text-gold-lt/70 mb-3 text-[9.5px] font-semibold tracking-[0.28em] uppercase">
+                Featured product
               </p>
-              <HeroAddToCart product={product} variant={variant} />
-            </div>
-          </div>
+              <h2 className="text-ivory mb-1.5 font-serif text-[22px] font-semibold">
+                {product.productName}
+              </h2>
+              <p className="text-ivory/50 mb-5 flex items-center gap-1.5 text-xs font-light">
+                <span
+                  className="bg-gold inline-block h-1.5 w-1.5 rounded-full"
+                  aria-hidden="true"
+                />
+                Traceably sourced
+              </p>
 
-          {/* Trust line — fills the panel and reinforces the QR promise. */}
-          <div className="flex items-center gap-3 rounded-lg border border-gold-lt/15 bg-white/[0.03] px-5 py-4">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold/30 bg-gold/10 text-gold-lt">
-              <QrIcon width={18} height={18} />
-            </span>
-            <p className="text-xs font-light leading-relaxed text-ivory/55">
-              Every jar carries the lab report for its exact batch.{" "}
-              <span className="text-ivory/80">Scan the QR to verify before you buy.</span>
-            </p>
-          </div>
+              {batch && (
+                <div className="mb-4 rounded-md bg-black/20 p-4">
+                  <p className="text-gold-lt/70 mb-2.5 text-[10px] font-semibold tracking-[0.2em] uppercase">
+                    Live batch report · {batch.batchNumber}
+                  </p>
+                  {batch.labParameters.slice(0, 4).map((p) => (
+                    <div
+                      key={p.id}
+                      className="flex items-center justify-between border-b border-white/5 py-1.5 text-xs last:border-0"
+                    >
+                      <span className="text-ivory/45 font-light">{p.name}</span>
+                      <span className="text-gold-lt font-medium">{p.result}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <div className="mt-4 flex items-center justify-between">
+                <p className="text-ivory font-serif text-2xl font-semibold">
+                  {formatPrice(variant.price)}{" "}
+                  <span className="text-ivory/40 text-[13px] font-light">
+                    / {variant.unitLabel}
+                  </span>
+                </p>
+                <HeroAddToCart product={product} variant={variant} />
+              </div>
+            </div>
+
+            {/* Trust line — fills the panel and reinforces the QR promise. */}
+            <div className="border-gold-lt/15 flex items-center gap-3 rounded-lg border bg-white/[0.03] px-5 py-4">
+              <span className="border-gold/30 bg-gold/10 text-gold-lt flex h-9 w-9 shrink-0 items-center justify-center rounded-full border">
+                <QrIcon width={18} height={18} />
+              </span>
+              <p className="text-ivory/55 text-xs leading-relaxed font-light">
+                Every jar carries the lab report for its exact batch.{" "}
+                <span className="text-ivory/80">Scan the QR to verify before you buy.</span>
+              </p>
+            </div>
           </div>
         </div>
       </div>

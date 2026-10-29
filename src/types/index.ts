@@ -148,6 +148,8 @@ export interface Combo {
 }
 
 export interface CartItem {
+  /** Catalogue SKU; older persisted carts are enriched at checkout. */
+  sku?: string;
   variantId: string;
   productId: string;
   slug: string;
@@ -175,6 +177,7 @@ export interface Address {
 }
 
 export interface OrderItem {
+  category?: string;
   productName: string;
   size: string;
   sku: string;
@@ -184,6 +187,9 @@ export interface OrderItem {
 }
 
 export interface Order {
+  analyticsContext?: { consent: boolean; fbp?: string; fbc?: string; ip?: string; userAgent?: string } | null;
+  paidAt?: string | null;
+  metaPurchaseSentAt?: string | null;
   id: string;
   orderNumber: string;
   email: string;
@@ -191,6 +197,8 @@ export interface Order {
   items: OrderItem[];
   subtotal: number;
   shippingAmount: number;
+  /** Included in shippingAmount for tracking; persisted separately for invoices. */
+  codFee?: number;
   taxAmount: number;
   totalAmount: number;
   currency: string;
@@ -208,6 +216,9 @@ export interface Order {
   /** Campaign attribution carried through checkout from the landing page. */
   utm: { source: string | null; medium: string | null; campaign: string | null };
   notes: string | null;
+  smsOptIn: boolean;
+  smsOptInAt: string | null;
+  smsConsentText: string | null;
   createdAt: string;
 }
 

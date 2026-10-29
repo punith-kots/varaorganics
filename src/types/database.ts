@@ -1,3 +1,4 @@
+import type { Review } from "@/features/reviews/types";
 /**
  * Hand-maintained Supabase schema types. Kept in sync with
  * supabase/migrations/*. If you regenerate with `supabase gen types`, replace
@@ -116,6 +117,7 @@ export interface OrdersRow extends Timestamps {
   shipping_address: Json;
   subtotal: number;
   shipping_amount: number;
+  cod_fee: number;
   tax_amount: number;
   total_amount: number;
   currency: string;
@@ -130,12 +132,20 @@ export interface OrdersRow extends Timestamps {
   tracking_url: string | null;
   idempotency_key: string;
   notes: string | null;
+  analytics_context: Json | null;
+  paid_at: string | null;
+  meta_purchase_sent_at: string | null;
+  browser_purchase_claimed_at: string | null;
+  sms_opt_in: boolean;
+  sms_opt_in_at: string | null;
+  sms_consent_text: string | null;
   utm_source: string | null;
   utm_medium: string | null;
   utm_campaign: string | null;
 }
 
 export interface OrderItemsRow {
+  item_category: string | null;
   id: string;
   order_id: string;
   variant_id: string | null;
@@ -213,6 +223,7 @@ export interface Database {
   public: {
     Tables: {
       products: Table<ProductsRow>;
+      product_reviews: Table<Review & { moderated_at: string | null }>;
       product_variants: Table<ProductVariantsRow>;
       product_images: Table<ProductImagesRow>;
       product_batches: Table<ProductBatchesRow>;

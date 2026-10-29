@@ -14,7 +14,7 @@ with `generateStaticParams`; verify/lp/order dynamic.
 
 `src/components/seo/metadata.ts` → `buildMetadata()` used by every route's `generateMetadata`:
 
-- `<title>` templated `%s | Vara Organics`.
+- `<title>` templated `%s | Vara Organic`.
 - **Canonical without trailing slash** (`canonical()` in `config/site.ts`).
 - Open Graph + Twitter `summary_large_image`.
 - `robots` index/noindex per page (lp, cart, checkout, order-confirmed, verify = noindex).

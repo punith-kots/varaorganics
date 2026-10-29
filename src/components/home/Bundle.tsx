@@ -31,6 +31,7 @@ export function Bundle({ bundle }: { bundle: Product }) {
   const add = () => {
     addItem({
       variantId: variant.id,
+      sku: variant.sku,
       productId: bundle.id,
       slug: bundle.slug,
       routePrefix: "bundles",
@@ -101,7 +102,7 @@ export function Bundle({ bundle }: { bundle: Product }) {
               Vara<span className="text-gold">.</span>
             </span>
             <span className="mt-1 block text-[10px] font-medium uppercase tracking-[0.3em] text-gold-lt">
-              Organics
+              Organic
             </span>
           </div>
           <p className="font-serif text-xl font-semibold text-ivory">The Wellness Starter Bundle</p>

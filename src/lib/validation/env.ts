@@ -23,10 +23,11 @@ const publicSchema = z.object({
   NEXT_PUBLIC_SUPABASE_URL: z.string().url().optional().or(z.literal("")),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().optional().or(z.literal("")),
   NEXT_PUBLIC_RAZORPAY_KEY_ID: z.string().optional().or(z.literal("")),
-  NEXT_PUBLIC_GTM_ID: z.string().optional().or(z.literal("")),
-  // Public Google tag ID; an explicit blank environment value disables GA4.
+  // Public GTM container; GA4 and Meta browser tags are managed only in GTM.
+  NEXT_PUBLIC_GTM_ID: z.string().default("GTM-54NPBRMX"),
+  // Legacy configuration retained for compatibility; no direct GA4 loader.
   NEXT_PUBLIC_GA_MEASUREMENT_ID: z.string().default("G-EQGM74S1KF"),
-  NEXT_PUBLIC_META_PIXEL_ID: z.string().optional().or(z.literal("")),
+  NEXT_PUBLIC_META_PIXEL_ID: z.string().default("1623537109216457"),
   NEXT_PUBLIC_CLARITY_ID: z.string().optional().or(z.literal("")),
   NEXT_PUBLIC_KLAVIYO_COMPANY_ID: z.string().optional().or(z.literal("")),
   NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: z.string().optional().or(z.literal("")),
@@ -60,6 +61,9 @@ export const USE_MOCK_DATA = isMock || publicEnv.NEXT_PUBLIC_USE_MOCK_DATA === "
 export const SITE_URL = publicEnv.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
 
 const serverSchema = z.object({
+  META_CAPI_TOKEN: z.string().optional(),
+  META_GRAPH_API_VERSION: z.string().regex(/^v\d+\.0$/).optional(),
+  META_CAPI_TEST_EVENT_CODE: z.string().optional(),
   SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
   RAZORPAY_KEY_SECRET: z.string().optional(),
   RAZORPAY_WEBHOOK_SECRET: z.string().optional(),

@@ -1,10 +1,12 @@
 # DEPLOYMENT.md
 
-Vara Organics requires a **Node.js runtime** — SSR, Route Handlers, ISR, Razorpay verification and
+Vara Organic requires a **Node.js runtime** — SSR, Route Handlers, ISR, Razorpay verification and
 Shiprocket calls cannot run as a static export. **Basic static shared hosting is insufficient**
 unless you split the frontend and a separate Node backend (not recommended; keep it one Next app).
 
-Node **20 LTS** or newer. Build once, run `next start`.
+Node **22.13+** (select **22.x** or **24.x** in hosting). Supabase dependencies require Node 22 or newer. Build once, run `next start`.
+
+Production builds use `next build --webpack` to avoid the hosted Turbopack CSS-worker crash. Keep the hosting build command as `npm run build`.
 
 ```bash
 npm ci
@@ -20,7 +22,7 @@ For Hostinger plans with Node.js app support (hPanel → **Website → Node.js**
 
 1. **Upload / connect** the repo (Git deploy or file manager). Ensure `package.json` is at the app
    root.
-2. **Node version:** select 20.x.
+2. **Node version:** select 22.x or 24.x.
 3. **Install command:** `npm ci`
 4. **Build command:** `npm run build`
 5. **Start command:** `npm run start` (Hostinger sets `PORT` — Next respects it).
@@ -42,7 +44,7 @@ Full control; recommended for production traffic.
 ```bash
 # 1. Base
 sudo apt update && sudo apt -y upgrade
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 sudo apt -y install nginx git
 sudo npm i -g pm2
 

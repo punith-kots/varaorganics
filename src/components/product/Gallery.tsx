@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { QualityImageOverlay } from "@/components/product/QualityImageOverlay";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import type { ProductImage } from "@/types";
@@ -11,20 +12,21 @@ export function Gallery({ images, productName }: { images: ProductImage[]; produ
   const current = images[active] ?? images[0];
 
   if (!current) {
-    return <div className="aspect-square w-full rounded bg-paper" aria-hidden="true" />;
+    return <div className="bg-paper aspect-square w-full rounded" aria-hidden="true" />;
   }
 
   return (
     <div>
-      <div className="relative aspect-square w-full overflow-hidden rounded border border-navy/10 bg-ivory">
+      <div className="border-navy/10 bg-ivory relative aspect-square w-full overflow-hidden rounded border">
         <Image
           src={current.url}
           alt={current.alt}
           fill
           priority
           sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover"
+          className={current.url.includes("/vara-ghee-") ? "object-contain" : "object-cover"}
         />
+        <QualityImageOverlay key={current.id} name={productName} />
       </div>
       <div
         className="mt-3 grid grid-cols-4 gap-3"
@@ -44,7 +46,13 @@ export function Gallery({ images, productName }: { images: ProductImage[]; produ
               i === active ? "border-amber" : "border-navy/10 hover:border-navy/30",
             )}
           >
-            <Image src={img.url} alt="" fill sizes="120px" className="object-cover" />
+            <Image
+              src={img.url}
+              alt=""
+              fill
+              sizes="120px"
+              className={img.url.includes("/vara-ghee-") ? "object-contain" : "object-cover"}
+            />
           </button>
         ))}
       </div>

@@ -1,4 +1,4 @@
--- Vara Organics — combos table (multilingual product combos).
+-- Vara Organic — combos table (multilingual product combos).
 --
 -- Each combo is purchased as ONE discounted line: `checkout_sku` points at a
 -- backing is_bundle product_variant priced at combo_price, so the existing

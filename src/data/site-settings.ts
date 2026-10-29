@@ -20,6 +20,6 @@ export const defaultSiteSettings: SiteSettings = {
   heroHeadline: "The ghee your grandmother knew.",
   heroHeadlineEm: "Proved, not claimed.",
   ourStory:
-    "Vara Organics brings pure A2 Bilona ghee, wood-pressed oils and raw wild honey from Indian farms to Bengaluru kitchens — traditional methods, small batches, nothing added, every batch lab-tested and QR-traceable.",
+    "Vara Organic brings pure A2 Bilona ghee, wood-pressed oils and raw wild honey from Indian farms to Bengaluru kitchens — traditional methods, small batches, nothing added, every batch lab-tested and QR-traceable.",
   founderPhotoUrl: "",
 };

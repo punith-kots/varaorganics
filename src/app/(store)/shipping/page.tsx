@@ -4,7 +4,7 @@ import { buildMetadata } from "@/components/seo/metadata";
 
 export const metadata: Metadata = buildMetadata({
   title: "Shipping Policy",
-  description: "Vara Organics shipping timelines, charges and coverage across India.",
+  description: "Vara Organic shipping timelines, charges and coverage across India.",
   path: "shipping",
 });
 

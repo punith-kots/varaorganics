@@ -32,7 +32,7 @@ const features: { Icon: Icon; title: string; body: string }[] = [
 export function WhyVara({ product }: { product: Product }) {
   const batch = product.currentBatch;
   return (
-    <Section tone="dark" ariaLabel="Why Vara Organics">
+    <Section tone="dark" ariaLabel="Why Vara Organic">
       <Eyebrow light>Why Vara</Eyebrow>
       <h2 className="font-serif text-[clamp(1.75rem,3.5vw,2.875rem)] font-semibold leading-tight text-ivory">
         The difference is in <em className="italic text-gold-lt">what we don&apos;t do</em>

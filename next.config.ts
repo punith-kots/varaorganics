@@ -31,11 +31,11 @@ if (sbHost) {
 const devEval = process.env.NODE_ENV === "production" ? "" : " 'unsafe-eval'";
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${devEval} https://checkout.razorpay.com https://www.googletagmanager.com https://connect.facebook.net https://www.clarity.ms https://static.klaviyo.com https://static-tracking.klaviyo.com https://app.interakt.ai`,
-  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  `script-src 'self' 'unsafe-inline'${devEval} https://checkout.razorpay.com https://www.googletagmanager.com https://tagmanager.google.com https://connect.facebook.net https://www.clarity.ms https://static.klaviyo.com https://static-tracking.klaviyo.com https://app.interakt.ai`,
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.googletagmanager.com https://tagmanager.google.com",
   "img-src 'self' data: blob: https:",
   "font-src 'self' https://fonts.gstatic.com data:",
-  "connect-src 'self' https://*.supabase.co https://lumberjack.razorpay.com https://api.razorpay.com https://www.google-analytics.com https://region1.google-analytics.com https://*.clarity.ms https://a.klaviyo.com https://www.googletagmanager.com https://api.interakt.ai",
+  "connect-src 'self' https://*.supabase.co https://lumberjack.razorpay.com https://api.razorpay.com https://*.google-analytics.com https://*.google.com https://*.google.co.in https://*.g.doubleclick.net https://pagead2.googlesyndication.com https://*.clarity.ms https://a.klaviyo.com https://www.googletagmanager.com https://api.interakt.ai https://www.facebook.com https://connect.facebook.net https://graph.facebook.com https://*.on.aws https://*.run.app https://*.cloud.run",
   "frame-src 'self' https://api.razorpay.com https://checkout.razorpay.com https://www.googletagmanager.com",
   "object-src 'none'",
   "base-uri 'self'",

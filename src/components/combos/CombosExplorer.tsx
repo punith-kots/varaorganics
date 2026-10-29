@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { QualityImageOverlay } from "@/components/product/QualityImageOverlay";
+import { COMBO_PRODUCT_IMAGES } from "@/data/combo-images";
 import Link from "next/link";
 import { useCart } from "@/features/cart/store";
 import { formatPrice, cn } from "@/lib/utils";
@@ -24,14 +26,6 @@ const BADGE_CLASS: Record<Combo["badgeColor"], string> = {
   green: "bg-success text-ivory",
   gold: "bg-gold text-navy",
   blue: "bg-navy-mid text-ivory",
-};
-
-/** Temporary catalogue photography until dedicated combo shoots are supplied. */
-const TEMP_PRODUCT_IMAGES: Record<string, string> = {
-  "a2-gir-cow-bilona-ghee": "/products/ghee.jpg",
-  "raw-wild-forest-honey": "/products/honey.jpg",
-  "wood-pressed-sesame-oil": "/products/sesame.jpg",
-  "wood-pressed-groundnut-oil": "/products/groundnut.jpg",
 };
 
 /**
@@ -112,7 +106,7 @@ export function ComboCard({
   const addItem = useCart((s) => s.addItem);
   const [added, setAdded] = useState(false);
   const temporaryImages = combo.contents.reduce<{ src: string; alt: string }[]>((images, item) => {
-    const src = TEMP_PRODUCT_IMAGES[item.productSlug];
+    const src = COMBO_PRODUCT_IMAGES[item.productSlug];
     if (src && !images.some((image) => image.src === src)) {
       images.push({
         src,
@@ -125,6 +119,7 @@ export function ComboCard({
   function add() {
     addItem({
       variantId: combo.checkout.variantId,
+      sku: combo.checkout.sku,
       productId: combo.checkout.productId,
       slug: combo.slug,
       routePrefix: "combos",
@@ -211,8 +206,9 @@ export function ComboCard({
                 alt={image.alt}
                 fill
                 sizes="(max-width: 767px) 50vw, 25vw"
-                className="object-cover transition-transform duration-500 hover:scale-[1.03]"
+                className="object-cover"
               />
+              <QualityImageOverlay name={image.alt} />
             </div>
           ))}
         </div>

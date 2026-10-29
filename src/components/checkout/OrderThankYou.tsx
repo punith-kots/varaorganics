@@ -13,7 +13,7 @@ export function OrderThankYou({ order, preview = false }: { order: Order; previe
       <div className="border-gold/35 bg-gold/10 relative aspect-[3/2] overflow-hidden rounded-2xl border shadow-[0_24px_70px_rgba(13,35,70,0.12)]">
         <Image
           src="/order-confirmed/thank-you.png"
-          alt="Thank you — we're delighted you chose Vara Organics"
+          alt="Thank you — we're delighted you chose Vara Organic"
           fill
           preload
           sizes="(max-width: 1023px) calc(100vw - 32px), 980px"
@@ -76,14 +76,30 @@ export function OrderThankYou({ order, preview = false }: { order: Order; previe
             <div className="flex justify-between gap-4">
               <dt className="text-navy/55">Shipping</dt>
               <dd className="text-navy">
-                {order.shippingAmount === 0 ? "Free" : formatPrice(order.shippingAmount)}
+                {order.shippingAmount - (order.codFee ?? 0) === 0
+                  ? "Free"
+                  : formatPrice(order.shippingAmount - (order.codFee ?? 0))}
               </dd>
             </div>
+            {(order.codFee ?? 0) > 0 && (
+              <div className="flex justify-between gap-4">
+                <dt>COD charges:</dt>
+                <dd>{formatPrice(order.codFee!)}</dd>
+              </div>
+            )}
             <div className="border-navy/10 text-navy flex justify-between gap-4 border-t pt-3 text-base font-semibold">
               <dt>Total</dt>
               <dd>{formatPrice(order.totalAmount)}</dd>
             </div>
           </dl>
+          {!preview && (
+            <Link
+              href={`/order/${order.id}/invoice`}
+              className="text-amber mt-4 inline-block underline"
+            >
+              View / print invoice
+            </Link>
+          )}
         </section>
 
         <aside className="bg-navy text-ivory rounded-xl p-5 shadow-[0_12px_35px_rgba(13,35,70,0.12)] sm:p-7">

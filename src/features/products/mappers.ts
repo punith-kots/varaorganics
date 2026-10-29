@@ -1,3 +1,4 @@
+import { gheeImages } from "@/data/ghee-images";
 import type {
   ProductsRow,
   ProductVariantsRow,
@@ -63,7 +64,12 @@ function placeholderImage(row: ProductsRow): ProductImage {
             : row.is_bundle
               ? "bundle"
               : "ghee";
-  return { id: `${row.id}-placeholder`, url: `/placeholders/${key}.svg`, alt: row.product_name, position: 0 };
+  return {
+    id: `${row.id}-placeholder`,
+    url: `/placeholders/${key}.svg`,
+    alt: row.product_name,
+    position: 0,
+  };
 }
 
 /** Keep the first occurrence of each parameter name (case-insensitive). */
@@ -138,7 +144,12 @@ export function mapProduct(row: ProductRowWithRelations): Product {
     featured: row.featured,
     isBundle: row.is_bundle,
     variants,
-    images: images.length > 0 ? images : [placeholderImage(row)],
+    images:
+      row.category === "ghee" && !row.is_bundle
+        ? gheeImages
+        : images.length > 0
+          ? images
+          : [placeholderImage(row)],
     currentBatch: activeBatch ? mapBatch(activeBatch) : null,
   };
 }

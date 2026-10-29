@@ -9,7 +9,7 @@ import { buildMetadata } from "@/components/seo/metadata";
 export const metadata: Metadata = buildMetadata({
   title: "B2B & Export",
   description:
-    "Varixa Global supplies Vara Organics ghee, oils and honey for wholesale, HoReCa and export. Minimum order quantities, markets served, and an enquiry form.",
+    "Varixa Global supplies Vara Organic ghee, oils and honey for wholesale, HoReCa and export. Minimum order quantities, markets served, and an enquiry form.",
   path: "b2b",
 });
 
@@ -37,7 +37,7 @@ export default function B2BPage() {
           B2B &amp; Export enquiries
         </h1>
         <p className="text-[15px] font-light leading-relaxed text-navy/75">
-          Varixa Global is the B2B and export arm behind Vara Organics. We supply lab-tested,
+          Varixa Global is the B2B and export arm behind Vara Organic. We supply lab-tested,
           batch-traced ghee, wood-pressed oils and raw honey for wholesale, retail, HoReCa and
           export — with full NABL lab documentation and traceability on every batch.
         </p>

@@ -36,6 +36,13 @@ describe("checkout schema", () => {
     expect(checkoutSchema.safeParse(base).success).toBe(true);
   });
 
+  it("accepts optional SMS consent only as an explicit boolean", () => {
+    expect(checkoutSchema.parse(base).smsOptIn).toBeUndefined();
+    expect(checkoutSchema.parse({ ...base, smsOptIn: false }).smsOptIn).toBe(false);
+    expect(checkoutSchema.parse({ ...base, smsOptIn: true }).smsOptIn).toBe(true);
+    expect(checkoutSchema.safeParse({ ...base, smsOptIn: "true" }).success).toBe(false);
+  });
+
   it("rejects an invalid email", () => {
     expect(checkoutSchema.safeParse({ ...base, email: "nope" }).success).toBe(false);
   });

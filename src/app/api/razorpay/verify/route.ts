@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { z } from "zod";
 import { verifyPaymentSignature } from "@/lib/razorpay/server";
-import { finalizeByRazorpayOrder } from "@/features/orders/service";
+import { finalizeByRazorpayOrder, OrderError } from "@/features/orders/service";
 import { ok, fail, serverError } from "@/lib/api/respond";
 
 export const runtime = "nodejs";
@@ -44,6 +44,8 @@ export async function POST(req: NextRequest) {
     if (!order) return fail(404, "order_not_found", "Order not found");
     return ok({ orderId: order.id, orderNumber: order.orderNumber });
   } catch (err) {
+    if (err instanceof OrderError && err.code === "payment_not_captured")
+      return fail(409, err.code, err.message);
     return serverError("razorpay/verify", err);
   }
 }

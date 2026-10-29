@@ -1,41 +1,53 @@
 "use client";
-
-import { useEffect, useRef } from "react";
-import { trackPurchase } from "@/lib/analytics/events";
-import type { OrderItem } from "@/types";
-
-/**
- * Fires the Purchase event ONCE from server-provided order data (the order only
- * exists after server-side verification — §18). Pushes to the GTM dataLayer so
- * GA4 / Meta Pixel / Klaviyo "Placed Order" can all be wired inside GTM.
- */
-export function PurchaseTracker({
-  orderNumber,
-  totalAmount,
-  email,
-  items,
-}: {
-  orderNumber: string;
-  totalAmount: number;
-  email: string;
-  items: OrderItem[];
-}) {
-  const fired = useRef(false);
+import { useEffect } from "react";
+import { analyticsConsented, trackPurchase, type PurchaseData } from "@/lib/analytics/events";
+export function PurchaseTracker({ order }: { order: PurchaseData }) {
   useEffect(() => {
-    if (fired.current) return;
-    fired.current = true;
-    trackPurchase({
-      orderNumber,
-      totalAmount,
-      email,
-      items: items.map((i) => ({
-        productName: i.productName,
-        size: i.size,
-        quantity: i.quantity,
-        unitPrice: i.unitPrice,
-        sku: i.sku,
-      })),
-    });
-  }, [orderNumber, totalAmount, email, items]);
+    let pending = false;
+    let finished = false;
+    let disposed = false;
+    let retryCount = 0;
+    let retryTimer: ReturnType<typeof setTimeout> | undefined;
+    const run = async () => {
+      if (
+        disposed || pending || finished || !analyticsConsented() ||
+        (order.paymentStatus !== "paid" && order.paymentStatus !== "cod_pending")
+      ) return;
+      clearTimeout(retryTimer);
+      pending = true;
+      try {
+        const response = await fetch("/api/tracking/purchase", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ orderId: order.id, consent: true }),
+        });
+        if (!response.ok) {
+          // Retry temporary failures only. Never bypass the database claim.
+          if (response.status === 429 || response.status >= 500) throw new Error("Retry purchase claim");
+          finished = true;
+          return;
+        }
+        const result = await response.json();
+        finished = true;
+        if (result.claimed === true) trackPurchase(order);
+      } catch {
+        // Three bounded retries cover short database/network outages after redirect.
+        if (!disposed && retryCount < 3) {
+          retryTimer = setTimeout(() => { void run(); }, 1000 * 2 ** retryCount++);
+        }
+      } finally {
+        pending = false;
+      }
+    };
+    void run();
+    window.addEventListener("vara:consent", run);
+    window.addEventListener("online", run);
+    return () => {
+      disposed = true;
+      clearTimeout(retryTimer);
+      window.removeEventListener("vara:consent", run);
+      window.removeEventListener("online", run);
+    };
+  }, [order]);
   return null;
 }

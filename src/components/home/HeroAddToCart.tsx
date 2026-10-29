@@ -16,6 +16,7 @@ export function HeroAddToCart({ product, variant }: { product: Product; variant:
   function add() {
     addItem({
       variantId: variant.id,
+      sku: variant.sku,
       productId: product.id,
       slug: product.slug,
       routePrefix: product.routePrefix,

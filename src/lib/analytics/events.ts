@@ -1,143 +1,140 @@
 import type { CartItem, Order } from "@/types";
 
-/**
- * Analytics event layer.
- *
- * Primary path is the **GTM dataLayer** (Tech Stack doc: GA4, Meta Pixel and
- * Clarity are all deployed *through* GTM, not as separate script tags). Every
- * event is pushed to `dataLayer` so the marketer can wire tags in GTM without
- * a code change.
- *
- * Fallback: if no GTM container is configured but GA4/Pixel IDs are, we call
- * gtag/fbq directly so tracking still works.
- *
- * Klaviyo events (Placed Order / Added to Cart / Started Checkout / identify)
- * are pushed to the same dataLayer for GTM to forward.
- *
- * Everything is a no-op until consent is granted. Purchase fires only from
- * server-verified order data (never a raw client callback).
- */
-
-type Gtag = (...args: unknown[]) => void;
-type Fbq = (...args: unknown[]) => void;
-
 interface AnalyticsWindow extends Window {
   dataLayer?: Record<string, unknown>[];
-  gtag?: Gtag;
-  fbq?: Fbq;
   __varaConsent?: boolean;
+  __varaPurchases?: Set<string>;
 }
-
-function w(): AnalyticsWindow | null {
-  return typeof window === "undefined" ? null : (window as AnalyticsWindow);
+const win = () => (typeof window === "undefined" ? null : (window as AnalyticsWindow));
+export function analyticsConsented(): boolean {
+  const w = win();
+  if (!w) return false;
+  if (w.__varaConsent !== undefined) return w.__varaConsent;
+  try {
+    return localStorage.getItem("vara-consent") === "granted";
+  } catch {
+    return false;
+  }
 }
-
-function consented(): boolean {
-  const win = w();
-  return !!win && win.__varaConsent === true;
+export function pushDataLayer(event: string, payload: Record<string, unknown> = {}) {
+  const w = win();
+  if (!w || !analyticsConsented()) return;
+  (w.dataLayer ??= []).push({ event, ...payload });
 }
-
-/** Push an event onto the GTM dataLayer (no-op without consent). */
-export function pushDataLayer(event: string, payload: Record<string, unknown> = {}): void {
-  const win = w();
-  if (!win || !consented()) return;
-  win.dataLayer = win.dataLayer ?? [];
-  win.dataLayer.push({ event, ...payload });
+function ecommerce(event: string, data: Record<string, unknown>, extra = {}) {
+  const w = win();
+  if (!w || !analyticsConsented()) return false;
+  (w.dataLayer ??= []).push({ ecommerce: null }, { event, ecommerce: data, ...extra });
+  return true;
 }
-
-/** Direct GA4/Pixel fallback used only when GTM is not configured. */
-function directGa(event: string, params: Record<string, unknown>) {
-  const win = w();
-  if (win?.gtag && consented()) win.gtag("event", event, params);
+export function itemCategory(value: string) {
+  if (/combo|bundle/i.test(value)) return "combo";
+  if (/oil|sesame|gnut|coco/i.test(value)) return "oil";
+  if (/honey/i.test(value)) return "honey";
+  return "ghee";
 }
-
-function directPixel(event: string, params: Record<string, unknown>) {
-  const win = w();
-  if (win?.fbq && consented()) win.fbq("track", event, params);
-}
-
 export function trackPageView(url: string) {
   pushDataLayer("page_view", { page_location: url });
-  directGa("page_view", { page_location: url });
-  const win = w();
-  if (win?.fbq && consented()) win.fbq("track", "PageView");
 }
-
-export function trackViewContent(item: { productName: string; price: number; sku: string }) {
-  const payload = {
+export function trackViewContent(item: {
+  productName: string;
+  price: number;
+  sku: string;
+  category?: string;
+  size: string;
+}) {
+  const data = {
     currency: "INR",
     value: item.price,
-    items: [{ item_id: item.sku, item_name: item.productName, price: item.price }],
-  };
-  pushDataLayer("view_item", payload);
-  directGa("view_item", payload);
-  directPixel("ViewContent", {
-    content_name: item.productName,
-    content_ids: [item.sku],
-    value: item.price,
-    currency: "INR",
-  });
-}
-
-export function trackAddToCart(item: CartItem) {
-  const value = item.price * item.quantity;
-  const payload = {
-    currency: "INR",
-    value,
     items: [
       {
-        item_id: item.variantId,
+        item_id: item.sku,
         item_name: item.productName,
+        item_category: itemCategory(item.category ?? item.sku),
         item_variant: item.size,
         price: item.price,
-        quantity: item.quantity,
+        quantity: 1,
       },
     ],
   };
-  pushDataLayer("add_to_cart", payload);
-  // Klaviyo "Added to Cart" — forwarded by GTM.
-  pushDataLayer("klaviyo_added_to_cart", {
-    value,
-    items: [{ ProductName: item.productName, Quantity: item.quantity, ItemPrice: item.price }],
-  });
-  directGa("add_to_cart", payload);
-  directPixel("AddToCart", { content_name: item.productName, value, currency: "INR" });
+  const sent = ecommerce("view_item", data, { page_location: win()?.location.href });
+  return sent;
 }
-
-export function trackBeginCheckout(value: number, email?: string) {
-  pushDataLayer("begin_checkout", { currency: "INR", value });
-  // Klaviyo "Started Checkout" (+ identify when we have an email).
-  pushDataLayer("klaviyo_started_checkout", { value, email });
-  if (email) pushDataLayer("klaviyo_identify", { email });
-  directGa("begin_checkout", { currency: "INR", value });
-  directPixel("InitiateCheckout", { value, currency: "INR" });
-}
-
-/** Fire ONLY after server-verified payment (from the order-confirmed page). */
-export function trackPurchase(
-  order: Pick<Order, "orderNumber" | "totalAmount"> & {
-    email?: string;
-    items?: { productName: string; size: string; quantity: number; unitPrice: number; sku: string }[];
-  },
-) {
-  const items = (order.items ?? []).map((i) => ({
+function cartItems(items: CartItem[]) {
+  return items.map((i) => ({
     item_id: i.sku,
     item_name: i.productName,
+    item_category: itemCategory(i.routePrefix),
     item_variant: i.size,
-    price: i.unitPrice,
+    price: i.price,
     quantity: i.quantity,
   }));
-  const payload = {
-    transaction_id: order.orderNumber,
+}
+export function trackAddToCart(item: CartItem) {
+  if (!item.sku) return false; // Never substitute an unrelated variant UUID for a SKU.
+  const data = { currency: "INR", value: item.price * item.quantity, items: cartItems([item]) };
+  const sent = ecommerce("add_to_cart", data);
+  if (sent) {
+    pushDataLayer("klaviyo_added_to_cart", data);
+  }
+  return sent;
+}
+export function trackBeginCheckout(items: CartItem[]) {
+  if (!items.length || items.some((i) => !i.sku)) return false;
+  const data = {
     currency: "INR",
-    value: order.totalAmount,
-    items,
+    value: Number(items.reduce((n, i) => n + i.price * i.quantity, 0).toFixed(2)),
+    items: cartItems(items),
   };
-  pushDataLayer("purchase", payload);
-  // NOTE: the order lifecycle email trigger is fired SERVER-side as the Resend
-  // "vara/order.confirmed" event (see features/orders/service.ts) so it can't be
-  // lost if the tab closes before this page loads. GA4/Pixel purchase below stay
-  // client-side for ad attribution.
-  directGa("purchase", payload);
-  directPixel("Purchase", { value: order.totalAmount, currency: "INR" });
+  const sent = ecommerce("begin_checkout", data);
+  if (sent) {
+    pushDataLayer("klaviyo_started_checkout", data);
+  }
+  return sent;
+}
+export type PurchaseData = Pick<
+  Order,
+  "id" | "paymentStatus" | "subtotal" | "shippingAmount" | "taxAmount" | "items"
+>;
+export function trackPurchase(order: PurchaseData) {
+  const w = win();
+  if (
+    !w ||
+    !analyticsConsented() ||
+    (order.paymentStatus !== "paid" && order.paymentStatus !== "cod_pending") ||
+    window.location.pathname !== `/order-confirmed/${encodeURIComponent(order.id)}`
+  )
+    return false;
+  const key = `va_purchase_sent_${order.id}`;
+  if (w.__varaPurchases?.has(key)) return true;
+  try {
+    if (localStorage.getItem(key)) return true;
+  } catch {
+    /* In-memory dedupe remains available. */
+  }
+  const data = {
+    transaction_id: order.id,
+    currency: "INR",
+    value: order.subtotal,
+    shipping: order.shippingAmount,
+    tax: order.taxAmount,
+    coupon: undefined,
+    items: order.items.map((i) => ({
+      item_id: i.sku,
+      item_name: i.productName,
+      item_category: itemCategory(i.category ?? i.sku),
+      item_variant: i.size,
+      price: i.unitPrice,
+      quantity: i.quantity,
+    })),
+  };
+  const eventId = `purchase_${order.id}`;
+  ecommerce("purchase", data, { event_id: eventId });
+  (w.__varaPurchases ??= new Set()).add(key);
+  try {
+    localStorage.setItem(key, "1");
+  } catch {
+    /* Storage may be blocked. */
+  }
+  return true;
 }

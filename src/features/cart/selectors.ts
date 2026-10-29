@@ -1,5 +1,7 @@
 import type { CartItem } from "@/types";
 
+export const COD_FEE = 99;
+
 /** Pure cart math — unit-tested independently of the store (§22). */
 
 export function cartCount(items: CartItem[]): number {

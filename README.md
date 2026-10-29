@@ -1,6 +1,6 @@
-# Vara Organics — D2C Storefront
+# Vara Organic — D2C Storefront
 
-Production-ready e-commerce site for **Vara Organics** (by **Varixa Global**): A2 Gir Cow Bilona
+Production-ready e-commerce site for **Vara Organic** (by **Varixa Global**): A2 Gir Cow Bilona
 ghee, wood-pressed oils and raw wild forest honey, sold D2C in Bengaluru with UAE as a future
 market.
 

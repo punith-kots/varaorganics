@@ -8,130 +8,228 @@ export const metadata: Metadata = buildMetadata({
   path: "privacy",
 });
 
-export default function PrivacyPage() {
+export default function PolicyPage() {
   return (
     <ContentPage eyebrow="Legal" title="Privacy Policy" path="privacy">
-      <p className="text-sm italic text-navy/50">Last updated: 18 September 2026</p>
+      <p className="text-navy/50 text-sm italic">Last updated: 29 October 2026</p>
       <p>
-        Varixa Global Ventures Private Limited (&ldquo;Vara Organic,&rdquo; &ldquo;we,&rdquo;
-        &ldquo;us,&rdquo; or &ldquo;our&rdquo;) operates the website varaorganic.com (the
-        &ldquo;Site&rdquo;). This Privacy Policy explains how we collect, use, disclose, and protect
-        your personal information when you visit our Site or make a purchase from us. By using our
-        Site, you agree to the collection and use of information in accordance with this policy.
+        Vara Organic collects only the personal information needed to deliver your orders, support
+        you and improve our website, and we never sell it.
       </p>
-
-      <h2>1. Information we collect</h2>
-      <h3>a) Information you provide to us</h3>
-      <ul>
-        <li>Name, email address, phone number</li>
-        <li>Billing and shipping address</li>
+      <h2>Who we are</h2>
+      <p>
+        Vara Organic is a brand of Varixa Global Ventures Pvt. Ltd., Bengaluru (FSSAI Lic. No.
+        11226998000505), operating www.varaorganic.com. This policy explains how we handle your
+        personal data under the Digital Personal Data Protection Act, 2023 and other applicable
+        Indian laws. You can reach us at hello@varaorganic.com or on WhatsApp at +91 96200 01197.
+      </p>
+      <h2>Information we collect</h2>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[580px] text-sm">
+          <thead>
+            <tr>
+              <th scope="col" className="border-navy/15 border-b px-3 py-3 text-left font-semibold">
+                What
+              </th>
+              <th scope="col" className="border-navy/15 border-b px-3 py-3 text-left font-semibold">
+                Examples
+              </th>
+              <th scope="col" className="border-navy/15 border-b px-3 py-3 text-left font-semibold">
+                When we collect it
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">Contact details</td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                Name, phone number, email address
+              </td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                Account sign-up, checkout, enquiries
+              </td>
+            </tr>
+            <tr>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">Delivery details</td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                Address, city, PIN code
+              </td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">Checkout</td>
+            </tr>
+            <tr>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">Order details</td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                Products, amounts, payment method (COD or online), order history
+              </td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                When you place an order
+              </td>
+            </tr>
+            <tr>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">Payment information</td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                Processed securely by our payment partner (Razorpay); we do not store card, UPI or
+                bank details
+              </td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">Online payments</td>
+            </tr>
+            <tr>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">Messages and uploads</td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                WhatsApp chats, emails, reviews, photos sent for returns
+              </td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                When you contact us or submit a review
+              </td>
+            </tr>
+            <tr>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">Device and usage data</td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                IP address, browser type, pages viewed, cookies
+              </td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                When you visit the website, subject to your cookie choice
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h2>How we use your information</h2>
+      <ul className="list-disc space-y-2 pl-6">
+        <li>To process, pack and deliver your orders, including cash-on-delivery orders</li>
+        <li>To send order confirmations and delivery updates by WhatsApp, SMS or email</li>
+        <li>To answer questions and handle returns and refunds</li>
+        <li>To send offers and updates by WhatsApp or email, only with your consent</li>
+        <li>To understand how the website is used and improve it</li>
+        <li>To measure and improve our advertising</li>
         <li>
-          Payment information (processed securely via our payment gateway partner; we do not store
-          your full card details)
+          To prevent fraud and meet legal, tax and accounting obligations, such as GST invoicing
         </li>
-        <li>Order history and preferences</li>
-        <li>Any information you provide when contacting customer support</li>
       </ul>
-      <h3>b) Information collected automatically</h3>
-      <ul>
-        <li>IP address, browser type, device information</li>
-        <li>Pages visited, time spent on the Site, referring website</li>
-        <li>Cookies and similar tracking technologies (see Section 6)</li>
+      <h2>Cookies and tracking</h2>
+      <p>
+        Analytics and advertising cookies load only after you click Accept on our cookie banner; if
+        you click Decline, only cookies essential to running the website are used.
+      </p>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[580px] text-sm">
+          <thead>
+            <tr>
+              <th scope="col" className="border-navy/15 border-b px-3 py-3 text-left font-semibold">
+                Tool
+              </th>
+              <th scope="col" className="border-navy/15 border-b px-3 py-3 text-left font-semibold">
+                Purpose
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                Google Analytics and Google Tag Manager
+              </td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                Understand visits, popular products and website performance
+              </td>
+            </tr>
+            <tr>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                Meta Pixel and Meta Conversions API
+              </td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                Measure and improve our Facebook and Instagram ads; may receive hashed email and
+                phone, and order details
+              </td>
+            </tr>
+            <tr>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">Microsoft Clarity</td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                Understand how visitors use pages, to fix usability issues
+              </td>
+            </tr>
+            <tr>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">Klaviyo</td>
+              <td className="border-navy/10 border-b px-3 py-3 align-top">
+                Send emails you have agreed to receive
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        You can change your choice at any time by clearing cookies in your browser and choosing
+        again on the banner.
+      </p>
+      <h2>Who we share information with</h2>
+      <p>
+        We share personal data only with service providers who help us run the business, and only
+        what each needs:
+      </p>
+      <ul className="list-disc space-y-2 pl-6">
+        <li>Courier and delivery partners, to deliver your order</li>
+        <li>Payment partner (Razorpay), to process online payments</li>
+        <li>Website hosting and database providers, to store orders and accounts securely</li>
+        <li>
+          Messaging providers (Interakt for WhatsApp, Klaviyo for email), to send order updates and
+          messages
+        </li>
+        <li>Analytics and advertising platforms (Google, Meta, Microsoft), as described above</li>
+        <li>Government or law enforcement authorities, when required by law</li>
       </ul>
-
-      <h2>2. How we use your information</h2>
-      <p>We use the information we collect to:</p>
-      <ul>
-        <li>Process and fulfil your orders, including shipping and delivery</li>
-        <li>Communicate with you about your order (confirmation, shipping updates, delivery status)</li>
-        <li>Respond to customer service inquiries</li>
-        <li>Send promotional communications, only if you have opted in (you may unsubscribe at any time)</li>
-        <li>Improve our Site, products, and customer experience</li>
-        <li>Detect and prevent fraud or unauthorized transactions</li>
-        <li>Comply with legal obligations</li>
+      <p>
+        We do not sell or rent your personal data. Some providers may process data on servers
+        outside India, with safeguards required by law.
+      </p>
+      <h2>WhatsApp and marketing messages</h2>
+      <p>
+        We send order confirmations and delivery updates to the phone number you give at checkout.
+        We send offers and updates only if you have agreed to receive them. To stop marketing
+        messages, tap "Stop offers" or reply STOP on WhatsApp, or use the unsubscribe link in any
+        email.
+      </p>
+      <h2>How long we keep your information</h2>
+      <ul className="list-disc space-y-2 pl-6">
+        <li>Order and invoice records: as long as tax and accounting laws require</li>
+        <li>Marketing contact details: until you withdraw consent or unsubscribe</li>
+        <li>Website analytics data: up to 14 months</li>
+        <li>Messages and return photos: as long as needed to resolve your request</li>
       </ul>
-
-      <h2>3. Sharing of information</h2>
-      <p>We do not sell your personal information. We may share your information with:</p>
-      <ul>
-        <li>Logistics and courier partners (e.g., for order delivery)</li>
-        <li>Payment processors (e.g., to process your payment securely)</li>
-        <li>Communication service providers (e.g., for sending order updates via email or WhatsApp)</li>
-        <li>Legal authorities, if required to comply with a legal obligation, court order, or government request</li>
-      </ul>
+      <h2>How we protect your information</h2>
       <p>
-        All third parties we work with are required to handle your information securely and only for
-        the purposes we specify.
+        Our website uses secure HTTPS connections, access to customer data is limited to staff who
+        need it, and online payments are handled by a payment partner that meets card-industry
+        security standards.
       </p>
-
-      <h2>4. Data security</h2>
-      <p>
-        We take reasonable technical and organizational measures to protect your personal
-        information from unauthorized access, alteration, disclosure, or destruction. However, no
-        method of transmission over the internet is 100% secure, and we cannot guarantee absolute
-        security.
-      </p>
-
-      <h2>5. Data retention</h2>
-      <p>
-        We retain your personal information for as long as necessary to fulfil the purposes outlined
-        in this policy, including to comply with legal, accounting, or reporting requirements.
-      </p>
-
-      <h2>6. Cookies</h2>
-      <p>
-        Our Site may use cookies and similar tracking technologies to improve your browsing
-        experience, remember your preferences, and analyze site traffic. You can control or disable
-        cookies through your browser settings; however, this may affect certain features of the Site.
-      </p>
-
-      <h2>7. Your rights</h2>
-      <p>Depending on applicable law, you may have the right to:</p>
-      <ul>
-        <li>Access the personal information we hold about you</li>
-        <li>Request correction of inaccurate information</li>
-        <li>Request deletion of your personal information</li>
-        <li>Withdraw consent for marketing communications at any time</li>
+      <h2>Your rights</h2>
+      <p>Under the Digital Personal Data Protection Act, 2023, you can ask us to:</p>
+      <ul className="list-disc space-y-2 pl-6">
+        <li>Share a summary of the personal data we hold about you</li>
+        <li>Correct or update your details</li>
+        <li>Delete your data, except records we must keep by law</li>
+        <li>Stop using your data for marketing, by withdrawing consent</li>
       </ul>
       <p>
-        To exercise any of these rights, please contact us at{" "}
-        <a href="mailto:hello@varaorganic.com">hello@varaorganic.com</a>.
+        To make a request, email hello@varaorganic.com with the subject "Privacy request" and the
+        phone number or email used for your orders. We will respond within the time required by law.
       </p>
-
-      <h2>8. Children&apos;s privacy</h2>
+      <h2>Children</h2>
       <p>
-        Our Site is not intended for individuals under the age of 18. We do not knowingly collect
-        personal information from children.
+        Our website is meant for adults. We do not knowingly collect personal data from anyone under
+        18 without a parent's or guardian's consent.
       </p>
-
-      <h2>9. Third-party links</h2>
+      <h2>Changes to this policy</h2>
       <p>
-        Our Site may contain links to third-party websites. We are not responsible for the privacy
-        practices or content of these external sites. We encourage you to review their privacy
-        policies separately.
+        We may update this policy from time to time. The latest version will always be on this page,
+        with the date of the last update at the top.
       </p>
-
-      <h2>10. Changes to this policy</h2>
-      <p>
-        We may update this Privacy Policy from time to time. Any changes will be posted on this page
-        with a revised &ldquo;Last updated&rdquo; date. We encourage you to review this policy
-        periodically.
-      </p>
-
-      <h2>11. Contact us</h2>
-      <p>
-        If you have any questions or concerns about this Privacy Policy or how we handle your
-        personal information, please contact us:
-      </p>
-      <p>
-        Varixa Global Ventures Private Limited (Vara Organic)
-        <br />
-        Mallathahalli, Dodballapur, Bengaluru Rural, Karnataka &ndash; 561203
-        <br />
-        Email: <a href="mailto:hello@varaorganic.com">hello@varaorganic.com</a>
-        <br />
-        Website: www.varaorganic.com
-      </p>
+      <h2>Grievance Officer</h2>
+      <p>For any privacy concern or complaint, contact our Grievance Officer:</p>
+      <ul className="list-disc space-y-2 pl-6">
+        <li>Name: Varshitha</li>
+        <li>Email: hello@varaorganic.com</li>
+        <li>WhatsApp: +91 96200 01197</li>
+        <li>Address: Varixa Global Ventures Pvt. Ltd., Bengaluru, Karnataka</li>
+      </ul>
     </ContentPage>
   );
 }

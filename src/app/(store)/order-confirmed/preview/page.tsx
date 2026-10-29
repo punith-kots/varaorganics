@@ -56,6 +56,9 @@ const previewOrder: Order = {
   batchNumber: "DEMO-BATCH",
   utm: { source: null, medium: null, campaign: null },
   notes: null,
+  smsOptIn: false,
+  smsOptInAt: null,
+  smsConsentText: null,
   createdAt: "2026-09-05T10:00:00.000Z",
 };
 

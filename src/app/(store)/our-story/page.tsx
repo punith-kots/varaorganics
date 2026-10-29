@@ -10,7 +10,7 @@ import { getSiteSettings } from "@/features/settings/queries";
 export const metadata: Metadata = buildMetadata({
   title: "Our Story",
   description:
-    "I couldn't find ghee I could trust, so I built it. The founder story behind Vara Organics — verified supply, published lab reports, nothing hidden.",
+    "I couldn't find ghee I could trust, so I built it. The founder story behind Vara Organic — verified supply, published lab reports, nothing hidden.",
   path: "our-story",
 });
 
@@ -44,7 +44,7 @@ export default async function OurStoryPage() {
           {founderPhotoUrl ? (
             <Image
               src={founderPhotoUrl}
-              alt="Founder, Vara Organics"
+              alt="Founder, Vara Organic"
               width={120}
               height={120}
               className="h-[120px] w-[120px] shrink-0 rounded-full border border-navy/15 object-cover"
@@ -55,7 +55,7 @@ export default async function OurStoryPage() {
               className="h-[120px] w-[120px] shrink-0 rounded-full border border-navy/15 bg-paper"
             />
           )}
-          <figcaption className="text-sm italic text-navy/55">Founder, Vara Organics</figcaption>
+          <figcaption className="text-sm italic text-navy/55">Founder, Vara Organic</figcaption>
         </figure>
 
         <div className="space-y-4 text-[15px] font-light leading-relaxed text-navy/75">

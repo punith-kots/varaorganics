@@ -5,7 +5,9 @@ import {
   faqSchema,
   breadcrumbSchema,
   organizationSchema,
+  comboProductSchema,
 } from "@/components/schema/builders";
+import { combos } from "@/data/combos";
 import type { Product, ProductVariant } from "@/types";
 
 describe("serializeJsonLd", () => {
@@ -24,6 +26,24 @@ describe("serializeJsonLd", () => {
 });
 
 describe("schema builders", () => {
+  it("keeps combo structured data aligned with its current catalogue offer", () => {
+    const combo = combos.find((item) => item.slug === "ajji-kai-ruchi")!;
+    const schema = comboProductSchema({
+      ...combo,
+      comboPrice: 3200,
+      checkout: { ...combo.checkout, sku: "UPDATED-COMBO-SKU" },
+    });
+    expect(schema.name).toBe(combo.names.english);
+    expect(schema.description).toBe(combo.tagline);
+    expect(schema.url).toMatch(/\/combos#ajji-kai-ruchi$/);
+    expect(schema.sku).toBe("UPDATED-COMBO-SKU");
+    expect(schema.offers.price).toBe(3200);
+    expect(schema.image).toHaveLength(4);
+    expect(schema.image.some((url) => url.endsWith("/product-images/vara-ghee-square.jpg"))).toBe(true);
+    expect(schema.offers).not.toHaveProperty("shippingDetails");
+    expect(schema.offers).not.toHaveProperty("hasMerchantReturnPolicy");
+  });
+
   const variant: ProductVariant = {
     id: "v1",
     productId: "p1",
@@ -83,6 +103,6 @@ describe("schema builders", () => {
   it("builds Organization schema", () => {
     const schema = organizationSchema() as Record<string, unknown>;
     expect(schema["@type"]).toBe("Organization");
-    expect(schema.name).toBe("Vara Organics");
+    expect(schema.name).toBe("Vara Organic");
   });
 });

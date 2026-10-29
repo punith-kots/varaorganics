@@ -1,4 +1,4 @@
-# Vara Organics: Main File and Application Start
+# Vara Organic: Main File and Application Start
 
 ## Is there one main file?
 
@@ -122,7 +122,7 @@ Individual pages can override the title. The title template then produces a
 value such as:
 
 ```text
-Products | Vara Organics
+Products | Vara Organic
 ```
 
 #### 7. Environment configuration

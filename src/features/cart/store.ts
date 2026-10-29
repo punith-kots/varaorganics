@@ -32,7 +32,7 @@ export const useCart = create<CartState>()(
             return {
               items: state.items.map((i) =>
                 i.variantId === item.variantId
-                  ? { ...i, quantity: i.quantity + item.quantity }
+                  ? { ...i, ...item, quantity: i.quantity + item.quantity }
                   : i,
               ),
             };
@@ -42,11 +42,15 @@ export const useCart = create<CartState>()(
       removeItem: (variantId) =>
         set((state) => ({ items: state.items.filter((i) => i.variantId !== variantId) })),
       updateQuantity: (variantId, quantity) =>
-        set((state) => ({
-          items: state.items
+        set((state) => {
+          const current = state.items.find((item) => item.variantId === variantId);
+          if (current && quantity > current.quantity) {
+            trackAddToCart({ ...current, quantity: quantity - current.quantity });
+          }
+          return { items: state.items
             .map((i) => (i.variantId === variantId ? { ...i, quantity: Math.max(1, quantity) } : i))
-            .filter((i) => i.quantity > 0),
-        })),
+            .filter((i) => i.quantity > 0) };
+        }),
       updateVariant: (fromVariantId, next) =>
         set((state) => {
           const current = state.items.find((i) => i.variantId === fromVariantId);

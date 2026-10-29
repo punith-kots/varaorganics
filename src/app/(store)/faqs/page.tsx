@@ -8,9 +8,9 @@ import { buildMetadata } from "@/components/seo/metadata";
 import { faqGroups, siteFaqs } from "@/data/siteFaqs";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Vara Organics FAQs — Products, Lab Reports, Delivery & Returns",
+  title: "Vara Organic FAQs — Products, Lab Reports, Delivery & Returns",
   description:
-    "Find answers about Vara Organics A2 bilona ghee, raw forest honey, wood pressed oils, lab reports, QR verification, delivery, payments and returns.",
+    "Find answers about Vara Organic A2 bilona ghee, raw forest honey, wood pressed oils, lab reports, QR verification, delivery, payments and returns.",
   path: "faqs",
 });
 

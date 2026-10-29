@@ -5,13 +5,14 @@ import { USE_MOCK_DATA } from "@/lib/validation/env";
 import { AdminLogoutButton } from "@/components/admin/AdminLogoutButton";
 
 export const metadata: Metadata = {
-  title: "Admin · Vara Organics",
+  title: "Admin · Vara Organic",
   robots: { index: false, follow: false },
 };
 
 const nav = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/orders", label: "Orders" },
+  { href: "/admin/reviews", label: "Reviews" },
   { href: "/admin/products", label: "Products" },
   { href: "/admin/combos", label: "Combos" },
   { href: "/admin/inventory", label: "Inventory" },
@@ -27,25 +28,25 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const user = await getAdminUser();
 
   return (
-    <div className="flex min-h-screen flex-col bg-paper/40">
-      <header className="border-b border-navy/10 bg-navy">
+    <div className="bg-paper/40 flex min-h-screen flex-col">
+      <header className="border-navy/10 bg-navy border-b">
         <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-3 px-6 py-3">
-          <Link href="/admin" className="font-serif text-xl font-semibold text-ivory">
+          <Link href="/admin" className="text-ivory font-serif text-xl font-semibold">
             Vara<span className="text-gold">.</span>{" "}
-            <span className="text-[11px] uppercase tracking-[0.2em] text-gold-lt">Admin</span>
+            <span className="text-gold-lt text-[11px] tracking-[0.2em] uppercase">Admin</span>
           </Link>
           <nav aria-label="Admin" className="flex flex-wrap gap-4">
             {nav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-[12px] font-medium uppercase tracking-[0.12em] text-ivory/70 hover:text-gold-lt"
+                className="text-ivory/70 hover:text-gold-lt text-[12px] font-medium tracking-[0.12em] uppercase"
               >
                 {item.label}
               </Link>
             ))}
           </nav>
-          <div className="flex items-center gap-3 text-[12px] text-ivory/55">
+          <div className="text-ivory/55 flex items-center gap-3 text-[12px]">
             <span>{user?.email}</span>
             <Link href="/" className="text-gold-lt hover:underline">
               View site →
@@ -56,7 +57,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       </header>
 
       {USE_MOCK_DATA && (
-        <p className="bg-warning/15 px-6 py-2 text-center text-xs text-warning">
+        <p className="bg-warning/15 text-warning px-6 py-2 text-center text-xs">
           Mock mode — showing seeded data. Connect Supabase for live orders and authentication.
         </p>
       )}

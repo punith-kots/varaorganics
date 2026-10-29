@@ -1,8 +1,10 @@
+import { getDisplayVariant } from "@/features/products/helpers";
 import { getStoreProducts, getFeaturedProducts, getBundle } from "@/features/products/queries";
 import { getSiteSettings } from "@/features/settings/queries";
 import { getPublishedCombos } from "@/features/combos/queries";
 import { BenefitsBar } from "@/components/home/BenefitsBar";
 import { Hero } from "@/components/home/Hero";
+import { GheeComparison } from "@/components/product/GheeComparison";
 import { PainPoints } from "@/components/home/PainPoints";
 import { ProductGrid } from "@/components/home/ProductGrid";
 import { WhyVara } from "@/components/home/WhyVara";
@@ -35,9 +37,7 @@ export default async function HomePage() {
 
   // Featured ghee drives Hero / StickyCart / FirstOrderCTA.
   const heroProduct = featured.find((p) => p.category === "ghee") ?? products[0]!;
-  const heroVariant =
-    heroProduct.variants.find((v) => v.active && v.routeSlug?.endsWith("500ml")) ??
-    heroProduct.variants.find((v) => v.active)!;
+  const heroVariant = getDisplayVariant(heroProduct);
   const availableCategories = (["ghee", "honey", "oils"] as Category[])
     .map((category) => ({
       key: category,
@@ -62,6 +62,9 @@ export default async function HomePage() {
           headlineEm={settings.heroHeadlineEm}
         />
       </div>
+      <div className="bg-ivory hidden px-6 py-12 md:block">
+        <GheeComparison batch={heroProduct.currentBatch} />
+      </div>
       {/* Single trust strip below the hero (consolidated from two). */}
       <BenefitsBar />
       <PainPoints />
@@ -83,6 +86,7 @@ export default async function HomePage() {
         note="Free Bengaluru delivery"
         item={{
           variantId: heroVariant.id,
+          sku: heroVariant.sku,
           productId: heroProduct.id,
           slug: heroProduct.slug,
           routePrefix: heroProduct.routePrefix,

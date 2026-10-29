@@ -15,7 +15,7 @@ const steps = [
   },
   {
     title: "Delivered to You",
-    body: "Bottled fresh under Vara Organics. QR on every jar. Bengaluru delivery in 48 hours.",
+    body: "Bottled fresh under Vara Organic. QR on every jar. Bengaluru delivery in 48 hours.",
   },
 ];
 

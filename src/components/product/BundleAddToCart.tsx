@@ -20,6 +20,7 @@ export function BundleAddToCart({ bundle }: { bundle: Product }) {
   const add = () => {
     addItem({
       variantId: variant.id,
+      sku: variant.sku,
       productId: bundle.id,
       slug: bundle.slug,
       routePrefix: "bundles",

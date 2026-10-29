@@ -14,7 +14,7 @@ function mapArticle(row: LearnContentRow): Article {
     title: row.title,
     excerpt: row.excerpt,
     category: row.category as Category,
-    coverImage: row.cover_image,
+    coverImage: row.category === "ghee" ? "/product-images/vara-ghee-square.jpg" : row.cover_image,
     bodyMarkdown: row.body_markdown,
     faqs: (row.faqs as FaqItem[] | null) ?? [],
     metaTitle: row.meta_title,

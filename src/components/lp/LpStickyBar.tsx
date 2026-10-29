@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/features/cart/store";
+import { useConsentTracking } from "@/lib/analytics/useConsentTracking";
 import { trackViewContent } from "@/lib/analytics/events";
 import { formatPrice } from "@/lib/utils";
 import { MinusIcon, PlusIcon } from "@/components/ui/Icons";
@@ -28,13 +29,17 @@ export function LpStickyBar({
   const addItem = useCart((s) => s.addItem);
   const [visible, setVisible] = useState(false);
   const [qty, setQty] = useState(1);
-  const viewed = useRef(false);
-
-  useEffect(() => {
-    if (viewed.current) return;
-    viewed.current = true;
-    trackViewContent({ productName: item.productName, price: item.price, sku });
-  }, [item.productName, item.price, sku]);
+  useConsentTracking(
+    () =>
+      trackViewContent({
+        productName: item.productName,
+        price: item.price,
+        size: item.size,
+        sku,
+        category: item.routePrefix,
+      }),
+    sku,
+  );
 
   useEffect(() => {
     const hero = document.getElementById(heroId);
@@ -51,23 +56,23 @@ export function LpStickyBar({
   }, [heroId]);
 
   function buy() {
-    addItem({ ...item, quantity: qty });
+    addItem({ ...item, sku, quantity: qty });
     const utm = typeof window !== "undefined" ? window.location.search.replace(/^\?/, "") : "";
     router.push(utm ? `/checkout?${utm}` : "/checkout");
   }
 
   return (
     <div
-      className={`fixed inset-x-0 bottom-0 z-[199] flex items-center justify-between gap-3 bg-navy px-5 py-3 shadow-[0_-4px_24px_rgba(0,0,0,0.2)] transition-transform duration-300 md:px-[8%] ${
+      className={`bg-navy fixed inset-x-0 bottom-0 z-[199] flex items-center justify-between gap-3 px-5 py-3 shadow-[0_-4px_24px_rgba(0,0,0,0.2)] transition-transform duration-300 md:px-[8%] ${
         visible ? "translate-y-0" : "translate-y-full"
       }`}
       aria-hidden={!visible}
     >
       <div className="min-w-0">
-        <p className="truncate text-sm text-ivory">
+        <p className="text-ivory truncate text-sm">
           {item.productName} · {item.size}
         </p>
-        <p className="text-xs text-gold">{formatPrice(item.price)} · Free Bangalore delivery</p>
+        <p className="text-gold text-xs">{formatPrice(item.price)} · Free Bangalore delivery</p>
       </div>
       <div className="flex shrink-0 items-center gap-3">
         <div className="hidden items-center overflow-hidden rounded-[2px] border border-white/15 sm:flex">
@@ -75,18 +80,21 @@ export function LpStickyBar({
             type="button"
             aria-label="Decrease quantity"
             onClick={() => setQty((q) => Math.max(1, q - 1))}
-            className="flex h-9 w-8 items-center justify-center bg-white/5 text-ivory"
+            className="text-ivory flex h-9 w-8 items-center justify-center bg-white/5"
           >
             <MinusIcon width={15} height={15} />
           </button>
-          <span className="flex h-9 w-8 items-center justify-center text-sm text-ivory" aria-live="polite">
+          <span
+            className="text-ivory flex h-9 w-8 items-center justify-center text-sm"
+            aria-live="polite"
+          >
             {qty}
           </span>
           <button
             type="button"
             aria-label="Increase quantity"
             onClick={() => setQty((q) => q + 1)}
-            className="flex h-9 w-8 items-center justify-center bg-white/5 text-ivory"
+            className="text-ivory flex h-9 w-8 items-center justify-center bg-white/5"
           >
             <PlusIcon width={15} height={15} />
           </button>
@@ -94,7 +102,7 @@ export function LpStickyBar({
         <button
           type="button"
           onClick={buy}
-          className="whitespace-nowrap rounded-[2px] bg-gold px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-navy-deep transition-colors hover:bg-gold-lt"
+          className="bg-gold text-navy-deep hover:bg-gold-lt rounded-[2px] px-5 py-2.5 text-[11px] font-bold tracking-[0.14em] whitespace-nowrap uppercase transition-colors"
         >
           {ctaLabel}
         </button>

@@ -26,6 +26,27 @@ export function razorpayPublicKeyId(): string {
   return publicEnv.NEXT_PUBLIC_RAZORPAY_KEY_ID ?? "";
 }
 
+/** A signed callback proves authenticity, not that funds were captured. */
+export async function confirmCapturedPayment(
+  paymentId: string,
+  orderId: string,
+  totalRupees: number,
+  currency: string,
+): Promise<boolean> {
+  if (USE_MOCK_DATA) return orderId.startsWith("order_mock_");
+  const rp = getClient();
+  if (!rp) throw new Error("Payment provider is not configured");
+  const payment = await rp.payments.fetch(paymentId);
+  return (
+    payment.id === paymentId &&
+    payment.order_id === orderId &&
+    payment.status === "captured" &&
+    payment.captured === true &&
+    Number(payment.amount) === Math.round(totalRupees * 100) &&
+    payment.currency === currency
+  );
+}
+
 export interface RazorpayOrder {
   id: string;
   amount: number;
@@ -40,6 +61,7 @@ export async function createRazorpayOrder(
   const amount = Math.round(amountRupees * 100); // paise
   const rp = getClient();
   if (!rp) {
+    if (!USE_MOCK_DATA) throw new Error("Payment provider is not configured");
     // Mock order — lets the flow proceed offline.
     return { id: `order_mock_${receipt}`, amount, currency: "INR" };
   }

@@ -9,22 +9,22 @@ export interface FaqGroup {
 export const faqGroups: FaqGroup[] = [
   {
     id: "about-vara-organics",
-    title: "What is Vara Organics",
+    title: "What is Vara Organic",
     items: [
       {
-        question: "What is Vara Organics?",
+        question: "What is Vara Organic?",
         answer:
-          "Vara Organics is a direct-to-consumer food brand by Varixa Global Ventures Private Limited, Bengaluru. We source A2 Gir Cow Bilona Ghee, Raw Wild Forest Honey, and traditional Wood Pressed Oils from family-owned farms across India and deliver them to your kitchen. Every product is independently tested at a NABL-certified laboratory before it ships.",
+          "Vara Organic is a direct-to-consumer food brand by Varixa Global Ventures Private Limited, Bengaluru. We source A2 Gir Cow Bilona Ghee, Raw Wild Forest Honey, and traditional Wood Pressed Oils from family-owned farms across India and deliver them to your kitchen. Every product is independently tested at a NABL-certified laboratory before it ships.",
       },
       {
-        question: "Where is Vara Organics based?",
+        question: "Where is Vara Organic based?",
         answer:
           "We are based in Bengaluru, Karnataka. Our ghee and honey are sourced from Kota, Rajasthan. Our wood pressed oils come from a traditional wooden ghani facility in Bengaluru.",
       },
       {
-        question: "Who started Vara Organics and why?",
+        question: "Who started Vara Organic and why?",
         answer:
-          "I started Vara Organics because I could not find what I was looking for during my pregnancy. When I was expecting my daughter, I became very careful about everything I ate. Ghee was the one food every doctor, every elder, every article agreed on — good ghee, made the right way, is genuinely nourishing. So I went looking for it. What I found was labels: Pure A2, Bilona method, Farm fresh. All of it was printed with confidence, but none of it was verifiable. I asked brands for lab reports. Most did not have them. I asked where the cows were. Nobody could tell me. I visited stores in Bengaluru, ordered online, and read every ingredient panel — but I still could not answer the most basic question a pregnant woman should be able to answer about the food she is eating: is what is on this label actually in this jar? That question stayed with me after my daughter was born. I started tracing the supply chain myself. I found farms and a government-approved laboratory in Jaipur that tests across 70 parameters. I asked one question to every supplier — will you let me publish the lab report on the jar? The ones who said yes became Vara. Vara means gift in Sanskrit. It started as a gift to my daughter — the certainty that what she was eating was exactly what the label said. It became a brand because I was not the only mother asking the same question.",
+          "I started Vara Organic because I could not find what I was looking for during my pregnancy. When I was expecting my daughter, I became very careful about everything I ate. Ghee was the one food every doctor, every elder, every article agreed on — good ghee, made the right way, is genuinely nourishing. So I went looking for it. What I found was labels: Pure A2, Bilona method, Farm fresh. All of it was printed with confidence, but none of it was verifiable. I asked brands for lab reports. Most did not have them. I asked where the cows were. Nobody could tell me. I visited stores in Bengaluru, ordered online, and read every ingredient panel — but I still could not answer the most basic question a pregnant woman should be able to answer about the food she is eating: is what is on this label actually in this jar? That question stayed with me after my daughter was born. I started tracing the supply chain myself. I found farms and a government-approved laboratory in Jaipur that tests across 70 parameters. I asked one question to every supplier — will you let me publish the lab report on the jar? The ones who said yes became Vara. Vara means gift in Sanskrit. It started as a gift to my daughter — the certainty that what she was eating was exactly what the label said. It became a brand because I was not the only mother asking the same question.",
       },
       {
         question: "What does Vara mean?",
@@ -32,9 +32,9 @@ export const faqGroups: FaqGroup[] = [
           "Vara is a Sanskrit word meaning gift or boon. It was chosen because the brand started as a gift — a promise to one child that her food was pure. It became a brand because many families were asking the same question.",
       },
       {
-        question: "Is Vara Organics a registered company?",
+        question: "Is Vara Organic a registered company?",
         answer:
-          "Yes. Vara Organics is the consumer brand of Varixa Global Ventures Private Limited — a registered private limited company in Karnataka. We hold FSSAI Central Licence No. 11226998000505, valid until 02 August 2027.",
+          "Yes. Vara Organic is the consumer brand of Varixa Global Ventures Private Limited — a registered private limited company in Karnataka. We hold FSSAI Central Licence No. 11226998000505, valid until 02 August 2027.",
       },
     ],
   },
@@ -269,7 +269,7 @@ export const faqGroups: FaqGroup[] = [
     title: "Returns and Replacements",
     items: [
       {
-        question: "What is Vara Organics' return policy?",
+        question: "What is Vara Organic' return policy?",
         answer:
           "We accept returns for damaged packaging on arrival, signs of spoilage or fungal growth, an unusual odour not characteristic of the product, or any condition that makes the product unfit for consumption. We do not accept returns for personal preferences such as taste, colour, aroma, or texture. Traditional foods such as bilona ghee, raw honey, and wood pressed oils naturally vary in colour, aroma, and texture. If your product meets an accepted return condition, email hello@varaorganic.com within 24 hours of delivery. Our team will verify the issue, arrange a return pickup, and dispatch a replacement of the same product after the return is received and inspected.",
       },
@@ -393,7 +393,7 @@ export const faqGroups: FaqGroup[] = [
           "We are a food brand, not a healthcare provider, and cannot give medical advice. Vara ghee is a traditional food product. If you have a health condition such as heart disease, high cholesterol, or diabetes, please consult your doctor about dietary fat intake before adding ghee to your diet.",
       },
       {
-        question: "How do I contact Vara Organics?",
+        question: "How do I contact Vara Organic?",
         answer:
           "Email hello@varaorganic.com or use the form on our Contact page. We aim to respond within four hours during business hours, 9am to 7pm IST, Monday to Saturday.",
       },

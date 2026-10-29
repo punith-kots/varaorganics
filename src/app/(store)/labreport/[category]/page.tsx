@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!validCategory(category)) notFound();
   return buildMetadata({
     title: `${reportLabels[category]} Lab Reports & Accreditation`,
-    description: `View available ${reportLabels[category].toLowerCase()} laboratory reports and Vara Organics batch records.`,
+    description: `View available ${reportLabels[category].toLowerCase()} laboratory reports and Vara Organic batch records.`,
     path: `${LAB_REPORTS_PATH.slice(1)}/${category}`,
   });
 }

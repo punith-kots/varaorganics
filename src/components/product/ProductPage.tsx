@@ -1,3 +1,4 @@
+import { ProductReviews } from "./ProductReviews";
 import { Container } from "@/components/ui/layout-primitives";
 import { Breadcrumb } from "@/components/learn/Breadcrumb";
 import { Gallery } from "./Gallery";
@@ -9,11 +10,7 @@ import { LearnLinks } from "./LearnLinks";
 import { Markdown } from "@/components/learn/Markdown";
 import { Accordion } from "@/components/ui/Accordion";
 import { JsonLd } from "@/components/schema/JsonLd";
-import {
-  breadcrumbSchema,
-  productSchema,
-  faqSchema,
-} from "@/components/schema/builders";
+import { breadcrumbSchema, productSchema, faqSchema } from "@/components/schema/builders";
 import { getRelatedProducts } from "@/features/products/queries";
 import { getArticlesBySlugs } from "@/features/articles/queries";
 import { categoryLabel } from "@/lib/utils";
@@ -27,7 +24,7 @@ export async function ProductPage({
   product: Product;
   variant: ProductVariant;
 }) {
-  const path = `${product.routePrefix}/${variant.routeSlug}`;
+  const path = `${product.routePrefix}/${variant.routeSlug ?? product.slug}`;
   const [related, learnArticles] = await Promise.all([
     getRelatedProducts(product),
     getArticlesBySlugs(product.learnLinks),
@@ -53,13 +50,13 @@ export async function ProductPage({
         <div className="mt-6 grid gap-10 md:grid-cols-2">
           <Gallery images={product.images} productName={product.productName} />
           <div>
-            <h1 className="mb-3 font-serif text-[clamp(1.875rem,3.5vw,2.75rem)] font-semibold leading-tight text-navy">
+            <h1 className="text-navy mb-3 font-serif text-[clamp(1.875rem,3.5vw,2.75rem)] leading-tight font-semibold">
               {product.productName}
             </h1>
-            <p className="mb-6 text-base font-light leading-relaxed text-navy/70">
+            <p className="text-navy/70 mb-6 text-base leading-relaxed font-light">
               {product.shortDescription}
             </p>
-            <PurchasePanel product={product} initialVariantId={variant.id} />
+            <PurchasePanel key={product.id} product={product} initialVariantId={variant.id} />
           </div>
         </div>
 
@@ -73,8 +70,8 @@ export async function ProductPage({
             {product.currentBatch && <BatchInfo batch={product.currentBatch} />}
             {product.ingredients && (
               <section aria-label="Ingredients">
-                <h2 className="mb-2 font-serif text-2xl font-semibold text-navy">Ingredients</h2>
-                <p className="text-[15px] font-light leading-relaxed text-navy/75">
+                <h2 className="text-navy mb-2 font-serif text-2xl font-semibold">Ingredients</h2>
+                <p className="text-navy/75 text-[15px] leading-relaxed font-light">
                   {product.ingredients}
                 </p>
               </section>
@@ -82,7 +79,7 @@ export async function ProductPage({
             {product.nutritionalInfo && <NutritionTable info={product.nutritionalInfo} />}
             {product.faqs.length > 0 && (
               <section aria-label="Frequently asked questions">
-                <h2 className="mb-4 font-serif text-2xl font-semibold text-navy">
+                <h2 className="text-navy mb-4 font-serif text-2xl font-semibold">
                   Frequently asked questions
                 </h2>
                 <Accordion items={product.faqs} />
@@ -93,6 +90,8 @@ export async function ProductPage({
             <LearnLinks articles={learnArticles} />
           </aside>
         </div>
+
+        <ProductReviews key={product.id} productId={product.id} />
 
         <div className="mt-16">
           <RelatedProducts products={related} />

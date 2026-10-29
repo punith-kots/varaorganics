@@ -19,7 +19,7 @@ export function Navbar() {
   const count = hydrated ? cartCount(items) : 0;
 
   return (
-    <header className="sticky top-0 z-[200] border-b border-navy/10 bg-ivory/95 backdrop-blur">
+    <header className="sticky top-0 z-[200] border-b border-navy/10 bg-white backdrop-blur">
       <nav className="mx-auto flex h-[68px] max-w-[1200px] items-center justify-between px-6 md:px-[6%]" aria-label="Primary">
         <Logo />
 

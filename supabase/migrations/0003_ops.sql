@@ -1,4 +1,4 @@
--- Vara Organics — operations layer (Tech Stack doc + solo-ops requirements).
+-- Vara Organic — operations layer (Tech Stack doc + solo-ops requirements).
 -- Adds: inventory with reorder points, batch traceability per order, richer
 -- landing pages (lp_pages), and shipment status history.
 

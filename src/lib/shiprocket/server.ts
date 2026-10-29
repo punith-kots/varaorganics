@@ -2,6 +2,7 @@ import "server-only";
 import { optionalServerEnv, USE_MOCK_DATA } from "@/lib/validation/env";
 import { safeError, safeLog } from "@/lib/security/redact";
 import type { Order } from "@/types";
+import { singleGheePackage } from "./packages";
 
 /**
  * Typed Shiprocket service. Server-only. Handles auth with an in-memory token
@@ -83,6 +84,14 @@ export async function createShipment(order: Order): Promise<ShipmentResult> {
   }
 
   try {
+    // Only single-jar packaging is confirmed. Keep the existing fallback for
+    // other orders until their outer-carton measurements are supplied.
+    const parcel = singleGheePackage(order.items) ?? {
+      length: 15,
+      breadth: 15,
+      height: 15,
+      weight: 1,
+    };
     const payload = {
       order_id: order.orderNumber,
       order_date: order.createdAt.slice(0, 10),
@@ -106,10 +115,9 @@ export async function createShipment(order: Order): Promise<ShipmentResult> {
       })),
       payment_method: order.paymentMethod === "cod" ? "COD" : "Prepaid",
       sub_total: order.subtotal,
-      length: 15,
-      breadth: 15,
-      height: 15,
-      weight: 1,
+      shipping_charges: order.shippingAmount - (order.codFee ?? 0),
+      transaction_charges: order.codFee ?? 0,
+      ...parcel,
     };
 
     const res = await fetch(`${BASE}/orders/create/adhoc`, {
@@ -132,7 +140,10 @@ export async function createShipment(order: Order): Promise<ShipmentResult> {
       trackingUrl: awb ? `https://shiprocket.co/tracking/${awb}` : null,
     };
   } catch (err) {
-    safeError("shiprocket", "createShipment failed", { err: String(err), order: order.orderNumber });
+    safeError("shiprocket", "createShipment failed", {
+      err: String(err),
+      order: order.orderNumber,
+    });
     return FAILED;
   }
 }

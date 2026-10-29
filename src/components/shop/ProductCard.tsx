@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { QualityImageOverlay } from "@/components/product/QualityImageOverlay";
 import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/features/cart/store";
@@ -52,6 +53,7 @@ export function ProductCard({
   function add() {
     addItem({
       variantId: selected.id,
+      sku: selected.sku,
       productId: product.id,
       slug: product.slug,
       routePrefix: product.routePrefix,
@@ -67,7 +69,7 @@ export function ProductCard({
 
   return (
     <article className="group border-navy/10 flex flex-col overflow-hidden rounded-[3px] border bg-white transition-shadow hover:shadow-[0_16px_44px_rgba(21,40,76,0.11)]">
-      <Link href={href} className="relative block" aria-label={product.productName}>
+      <div className="relative block">
         <div className={cn("relative", featured ? "aspect-[4/3]" : "aspect-square")}>
           {image && (
             <Image
@@ -78,6 +80,7 @@ export function ProductCard({
               className="object-cover"
             />
           )}
+          <QualityImageOverlay key={href} name={product.productName} href={href} />
           {tag && (
             <span className="absolute top-2.5 left-2.5">
               <Badge tone={tag === "Hero Product" ? "navy" : "amber"}>{tag}</Badge>
@@ -94,7 +97,7 @@ export function ProductCard({
             </span>
           )}
         </div>
-      </Link>
+      </div>
 
       <div className="flex flex-1 flex-col p-3">
         <h3 className="text-navy mb-1 line-clamp-2 min-h-[2.4em] font-serif text-[15px] leading-tight font-semibold">

@@ -1,3 +1,4 @@
+import { checkoutAnalyticsContext } from "@/lib/analytics/request-context";
 import type { NextRequest } from "next/server";
 import { createOrderSchema } from "@/lib/validation/checkout";
 import { initiateCheckout } from "@/features/payments/service";
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest) {
   const idempotencyKey = req.headers.get("idempotency-key") ?? crypto.randomUUID();
 
   try {
-    const result = await initiateCheckout(input, idempotencyKey);
+    const result = await initiateCheckout(input, idempotencyKey, checkoutAnalyticsContext(req, input.analyticsConsent));
     return ok(result);
   } catch (err) {
     if (err instanceof OrderError) return fail(409, err.code, err.message);

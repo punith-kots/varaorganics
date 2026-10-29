@@ -1,3 +1,4 @@
+import { gheeImages } from "./ghee-images";
 import type { Product, ProductImage } from "@/types";
 import { comboBundleProducts } from "./combos";
 
@@ -140,7 +141,7 @@ Every batch is independently NABL lab-tested before it ships. Scan the QR on you
         routeSlug: "a2-gir-cow-bilona-ghee-1l",
       },
     ],
-    images: images("ghee", "A2 Gir Cow Bilona Ghee"),
+    images: gheeImages,
     currentBatch: {
       id: "batch-ghee",
       productId: "prod-ghee",
